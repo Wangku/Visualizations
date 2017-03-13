@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<h1 id = tit></h1>
+<div id="pos">
+	<div id='bar' class="inline"></div>
+	<div id='circle' class='inline'></div>
+	<div id='canvas' class='inline'></div>
+</div>
+<style type="text/css">
+	h1{
+		font-size: 50px;
+		margin:5px 0px 5px 0px;
+		font-weight: bold;
+		color: #1a6b3b;
+	}
+
+	.inline{
+		float:left;
+	}
+
+	div[name = "detail"]{
+		height: 520px;
+		font-size: 12px;
+	}
+
+	th, td{
+		text-align: center;
+		padding: 2px;
+	}
+
+	.barhead{
+	}
+
+	.yearlegend{
+	}
+
+	.yearcircle{
+	}
+
+</style>
+<body>
+	<script src="//d3js.org/d3.v3.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type="text/javascript">
+		d3.select("#tit").text("Nature Visualization").attr("style","h1");
+		var _title=["year","total_burden_in_million","publication","trial","ROI"];
+		var _color=["#FF1900", "#FF3300", "#FF6600", "#FF9900", "#FFCC00", "#FFFF00", "#E6F500", "#CCEB00", "#99D600", "#66C200", "#33AD00", "#009900"];
+
+		var width = 580,
+			height= 500,
+			bar_width = 75,
+			circle_width = 170;
+
+		var filter = 10,
+			filter_nag = 1;
+		var columns = [_title[0], _title[1], _title[2],_title[3], _title[4]];
+		var years,colors,radius,bubbledata,confdata,underdirc, overdirc = {};
+		var Ex,Rscale;
+
+
+		d3.csv("naturetest.csv",type,function(error, data){
+
+			if (error) throw error;
+
+			data.forEach(function(d){
+				d.ROI = parseInt(d.ROI);
+			});
+			confdata = data;
+
+			Max = d3.max(data.map(function(d){return d.ROI}));
+			Ex = Math.ceil(Math.log(Max)/Math.log(10));
+			Rscale = d3.scale.log().base(Math.E).domain([Math.exp(1), Math.exp(Ex)]).range([1,45]);
+
+			Min = d3.min(data.map(function(d){return d.ROI}));
+			ExS = Math.floor(Math.log(Min)/Math.log(10));
+			RscaleS = d3.scale.log().base(Math.E).domain([Math.exp(ExS), Math.exp(0)]).range([45,1]);
+
+
+			years = d3.nest().key(function(d){return d.year}).entries(confdata);
+			colors = d3.scale.ordinal().domain([2011,2010,2009,2008,2007,2006,2005,2004,2003,2002,2001,2000]).range([_color[0],_color[1],_color[2],_color[3],_color[4],_color[5],_color[6],_color[7],_color[8],_color[9],_color[10],_color[11]]);
+
+
+			draw(confdata);
+
+		})
+
+		function draw(d){
+			drawCircles(d);
+			drawYearMeter(d);
+			//drawCicleLegend(d);
+		}
+
+
+
+		function drawYearMeter(d){
+			len = years.length
+			step = (height-20)/ len;
+			years_swith=[];
+			for(var i=len-1; i >=0; i--){
+				years_swith.push({"year":years[i].key, "flag": 1})
+			};
+
+			svg = d3.select("#bar").append("svg")
+											   .attr("height", height)
+											   .attr("width", bar_width);
+
+			head = svg.append("g").attr("class","barhead")
+					              .on("click", function(){
+					              	text = d3.select(this).select("text").text();
+					              	if(text == "Unselect All"){
+					              		d3.selectAll(".barhead").select("text").text("Select All");
+					              		d3.selectAll(".barhead").select("rect").attr("fill", "lightgray");
+					              		d3.selectAll(".yearlegend").attr("opacity", function(s){
+					              			s.flag = 0;
+					              			return 0;
+					              		});
+					              		d3.selectAll(".yearcircle").attr("opacity", 0);
+					              	}
+					              	else{
+					              		d3.selectAll(".barhead").select("text").text("Unselect All");
+					              		d3.selectAll(".barhead").select("rect").attr("fill", "gray");
+					              		d3.selectAll(".yearlegend").attr("opacity", function(s){
+					              			s.flag = 1;
+					              			return 1;
+					              		});
+					              		d3.selectAll(".yearcircle").attr("opacity", 1);
+					              	}
+					              });
+
+			head.append("rect").attr("x", 0).attr("y", 0).attr("width", bar_width).attr("height",20).attr("fill","gray");
+			head.append("text").text("Unselect All").style("text-anchor", "middle").attr("font-size", "8px").attr("transform", "translate(" +bar_width/2+ ",12)" );
+
+			bar = svg.append("g")
+					 .attr("transform", "translate(0,20)")
+					 .selectAll("years")
+					 .data(years_swith).enter()
+					 .append("g")
+					 .attr("transform", function(e,i){
+					 	return "translate(0," + i*step + ")"
+					 })
+					 .on("click", function(e){
+					 	e.flag = 1 - e.flag;
+					 	d3.selectAll(".yearlegend").each(function(h){
+					 		if(h.year == e.year){
+					 			d3.select(this).attr("opacity", e.flag)
+					 		}
+					 	});
+					 	d3.selectAll(".yearlegend").each(function(h){
+					 		if(h.year == e.year){
+					 			d3.select(this).attr("opacity",e.flag)
+					 		}
+					 	});
+
+					 });
+			bar.append("rect").attr("x",0).attr("y",0).attr("class","yearlegend").attr("width",bar_width).attr("height",step).attr("fill",function(e){return colors(e.year)});
+			bar.append("text").style("text-anchor","middle").attr("transform", "translate(" +bar_width/2+ "," +(step/2+7)+ ")" ).text(function(e){return e.year});
+
+		}
+
+		var pack =d3.layout.pack().size(width,height);
+
+		function drawCircles(d){
+			canvas = d3.select("#canvas").append("svg").attr("width",width).attr("height",height);
+
+			circles = canvas.append("g").attr("class", "yearcircle").selectAll("circle").data(d).enter().append("circle").attr("fill","none").attr("cx",width/2).attr("cy",height/2).attr("stroke", function(e){return colors(e.year)}).attr("r",function(e){return Rscale(e.ROI)}).append("title").text(function(e){return "year:" +e.year+", "+e.ROI});
+
+			circles.append("text").text(function(e){return e.ROI}).attr("fill","black").attr("font-size",11).attr("x",function(e){return width/2+Rscale(e.ROI)}).attr("y",height/2);
+		}
+
+		function type(d){
+			return (d.total_burden_in_million = +d.total_burden_in_million)? d: null;
+			return (d.trial = +d.trial)? d: null;
+			return (d.ROI = +d.ROI)? d: null;
+			return (d.publication = +d.publication)?d: null;
+		}
+</script>
+</body>
