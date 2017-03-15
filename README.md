@@ -1,6 +1,7 @@
 Visualizations
 ========
-This Repo is my visualization work. It includes varity domains: maps, data structures, high dimensional data, etc..
+This Repo is my visualization work. It includes variety of domains: maps, data structures, high dimensional data, etc..
+
 Beginning Part
 -------
 ## First Project
