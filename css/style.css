@@ -4,11 +4,12 @@ img { border: none }
 p{text-align: justify}
 li{text-align: justify}
 a{text-decoration: none; color:#1a6b3b;}
-.inside { width: 1115px; margin: auto auto; position: relative }
+.inside { width: 1150px; margin: auto auto; position: relative }
 h3{font-size:18px;margin:5px 0px 5px 0px;font-weight:bold;}
 h1{font-size: 50px;margin:0px 10px 50px 0px;font-weight: bold;color: #1a6b3b;}
 h2{font-size: 18px;margin:20px 0px 20px 0px;font-weight: bold;}
 .bigdiv{width:auto;height:510px;}
+.fill{width:auto; margin-left: 50px;}
 .inline{float:left;}
 .tbname{margin-left: 10px;text-align: left;font-size: 20px;}
 th, td {text-align: center;padding: 5px;}
@@ -45,7 +46,7 @@ th, td {text-align: center;padding: 5px;}
 
 
 #content .inside { background: #fff;height: 1250px}
-#content .inside .slideshow img {margin-left: 75px}
+#content .inside .slideshow img {margin-left: 100px}
 /*#content .inside h2 { font-weight: normal; font-size: 30px; margin: 30px 0 40px 0; padding: 0 }*/
 #content .inside .left, #content .inside .right { float: left; padding: 0 0 }
 #content .inside .right { width: 350px; float: right }
