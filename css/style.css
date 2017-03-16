@@ -1,4 +1,4 @@
-body { font-size: 12px; font-family: Arial, Verdana, Georgia, Helvetica, sans-serif; margin: 0; padding: 0; overflow-x: hidden; color: #000; background: #676666 }
+body { font-size: 12px; font-family: Georgia,Arial, Verdana, Helvetica, sans-serif; margin: 0; padding: 0; overflow-x: hidden; color: #000; background: #676666 }
 .clear { clear: both }
 img { border: none }
 p{text-align: justify}
@@ -6,7 +6,7 @@ li{text-align: justify}
 a{text-decoration: none; color:#1a6b3b;}
 .inside { width: 1150px; margin: auto auto; position: relative }
 h1{font-size: 50px;margin:0px 0px 50px 0px;font-weight: bold;color: #1a6b3b;text-align:center;}
-h2{font-size: 18px;margin:20px 0px 20px 0px;font-weight: bold;color: #1a6b3b;}
+h2{font-size: 22px;margin:20px 0px 20px 0px;font-weight: bold;color: #1a6b3b;}
 .bigdiv{width:auto;height:510px;}
 .fill{width:auto; margin-left: 50px;}
 .inline{float:left;}
