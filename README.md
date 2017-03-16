@@ -23,17 +23,17 @@ Hierarchy Structure
 
 
 >The table is part of **[flare.csv](https://github.com/Wangku/Visualizations/tree/gh-pages/flare.csv)** file. It has two columns, one is **id**, and the other is **value**. The **id** string is combined by one or several substrings with the symbol **'.'**, so it can be treated as a hierarchy structure. There are some visualizations for presenting this structure:
->- Circle Packing [demo]
+>- Circle Packing [Demo](https://wangku.github.io/Visualizations/TreeStructure/CirclePacking.html)
 >
->- Packing [demo]
+>- Packing     [Demo](https://wangku.github.io/Visualizations/TreeStructure/Packing.html)
 >
->- Tree [demo1] [demo2]
+>- Tree [Demo1](https://wangku.github.io/Visualizations/TreeStructure/Tree.html)
 >
->- RadialTreeGraph [demo]
+>- RadialTreeGraph [Demo](https://wangku.github.io/Visualizations/TreeStructure/RadialTreeGraph.html)
 >
->- TreeMap [demo1] [demo2]
+>- TreeMap [Demo1](https://wangku.github.io/Visualizations/TreeStructure/TreeMap.html) [Demo2](https://wangku.github.io/Visualizations/TreeStructure/TreeMap_2nd.html)
 >
->- Sunburst [demo]
+>- Sunburst [Demo](https://wangku.github.io/Visualizations/TreeStructure/Sunburst.html)
 >
 
 
