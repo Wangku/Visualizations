@@ -9,18 +9,18 @@ Hierarchy Structure
 =========
 >As we all know
 >The data has the following structure as example.
-
- id | value
-------------|------------
-flare |
-flare.analytics|
-flare.analytics.cluster|
-flare.analytics.cluster.AgglomerativeCluster|3938
-flare.analytics.cluster.CommunityStructure	|3812
-flare.animate	|
-flare.animate.Easing	|17010
-flare.animate.FunctionSequence	|5842
-
+>
+> id | value
+>------------|------------
+>flare |
+>flare.analytics|
+>flare.analytics.cluster|
+>flare.analytics.cluster.AgglomerativeCluster|3938
+>flare.analytics.cluster.CommunityStructure	|3812
+>flare.animate	|
+>flare.animate.Easing	|17010
+>flare.animate.FunctionSequence	|5842
+>
 >The table is part of **flare.csv** file. It has two columns, one is **id**, and the other is **value**. The **id** string is combined by one or several substrings with the symbol **'.'**, so it can be treated as a hierarchy structure. There are some visualizations for presenting this structure:
 >- Circle Packing [demo]
 >
