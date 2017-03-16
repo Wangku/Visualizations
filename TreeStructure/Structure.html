@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+	<div id="content">
+		<div class="inside">
+			<img src="../1st project/whiteband.png", alt>
+			<h1 id="tit">Data Structure Visualization</h1>
+			<div class="fill">
+				<h2 id="sentense1"></h2>
+				<p></p>
+				<div id="brush"></div>
+				<!-- <h2 id="sentense2"></h2>
+				<div id="sunburst1"></div>
+				<div id="sunburst2"></div>
+				<div id="sunburst3"></div> -->
+				<h2 id="sentense3"></h2>
+				<div id="stack1"></div>
+				<div id="stack2"></div>
+				<div id="stack3"></div>
+			</div>
+		</div>
+	</div>
+	<link href="../css/style2.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+	text {
+	  font: 10px sans-serif;
+	  text-anchor: middle;
+	}
+
+	.node--hover circle {
+	  stroke: #000;
+	  stroke-width: 1.2px;
+	}
+	</style>
+</head>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script type="text/javascript">
+	d3.select("#sentense1").text("Brush Visualization");
+	d3.select("#sentense2").text("Sunburst Visualization");
+	d3.select("#sentense3").text("Different type of stack bar graph");
+
+	var width = 960,
+		height= 500,
+		margin= 30,
+
+	var height_sun = 700,
+		raduis = (Math.min(width, height)/2) - 15;
+
+	var formatNumber = d3.format(",d");
+
+	var svg2 = d3.select("#sunburst1").append("svg").attr("width",width).attr("height",height_sun);
+
+	var x_sun = d3.scaleLinear().range([0, 2*Math.PI]),
+		y_sun = d3.scaleLinear().range([0,raduis]);
+
+	var color = d3.interpolateYlGnBu(1);
+
+
+	var svg3 = d3.select("#sunburst2").append("svg").attr("width",width).attr("height",height);
+
+	var svg4 = d3.select("#sunburst3").append("svg").attr("width",width).attr("height",height);
+
+	//circle packing
+	var height_pack = 960;
+
+	var color_svg5 = d3.scaleSequential(d3.interpolateViridis).domain([-5, 5]);
+
+	var stratify = d3.stratify().parentId(function(d){return d.id.substring(0, d.id.lastIndexOf("."))});
+
+	var pack = d3.pack().size([width-2,height_pack-2]).padding(2);
+
+	var svg5 = d3.select("#stack1").append("svg").attr("width",width).attr("height",height_pack).style("display","block").style("margin","auto");
+
+	var g5 = svg5.append("g").attr("transform", "translate(2,2)");
+
+	d3.csv("flare.csv", function(error,data){
+		if(error) throw error;
+
+		var root = stratify(data).sum(function(d){return d.value}).sort(function(a,b){return b.value - a.value});
+
+		pack(root);
+
+		var node = g5.selectAll("g").data(root.descendants()).enter().append("g").attr("transform",function(d){return "translate(" + d.x+ ","+ d.y +")"}).attr("class",function(d){return "node"+(!d.children ? " node--leaf" : d.depth ? "" : " node--root")}).each(function(d){return d.node = this}).on("mouseover", hovered(true)).on("mouseout",hovered(false));
+
+		node.append("circle").attr("id",function(d){return "node-"+d.id}).attr("r",function(d){return d.r}).style("fill",function(d){return color_svg5(d.depth)});
+
+		var leaf = node.filter(function(d){return !d.children});
+
+		leaf.append("clipPath").attr("id",function(d){return "clip-"+d.id}).append("use").attr("xlink:href",function(d){return "#node-"+d.id+""});
+
+		leaf.append("text").attr("clip-path",function(d){return "url(#clip-"+d.id+")"}).selectAll("tspan").data(function(d){return d.id.substring(d.id.lastIndexOf(".")+1).split(/(?=[A-Z][^A-Z])/g)}).enter().append("tspan").attr("x",0).attr("y",function(d,i,nodes){return 13+(i-nodes.length/2-0.5)*10}).text(function(d){return d});
+
+		node.append('title').text(function(d){return d.id+"\n"+format(d.value)})
+	})
+
+	function hovered(hover) {
+	  return function(d) {
+	    d3.selectAll(d.ancestors().map(function(d) { return d.node; })).classed("node--hover", hover);
+	  };
+	}
+
+	var svg6 = d3.select("#stack2").append("svg").attr("width",width).attr("height",height).style("display","block").style("margin","auto");
+
+	var svg7 = d3.select("#stack3").append("svg").attr("width",width).attr("height",height).style("display","block").style("margin","auto");
+</script>
