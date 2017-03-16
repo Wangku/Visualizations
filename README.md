@@ -7,9 +7,9 @@ Warmup Visualization
 
 Hierarchy Structure
 =========
->As we all know
+>As we all know.
 >The data has the following structure as example.
->
+
 > id | value
 >------------|------------
 >flare |
@@ -20,8 +20,9 @@ Hierarchy Structure
 >flare.animate	|
 >flare.animate.Easing	|17010
 >flare.animate.FunctionSequence	|5842
->
->The table is part of **flare.csv** file. It has two columns, one is **id**, and the other is **value**. The **id** string is combined by one or several substrings with the symbol **'.'**, so it can be treated as a hierarchy structure. There are some visualizations for presenting this structure:
+
+
+>The table is part of **[flare.csv](https://github.com/Wangku/Visualizations/tree/gh-pages/flare.csv)** file. It has two columns, one is **id**, and the other is **value**. The **id** string is combined by one or several substrings with the symbol **'.'**, so it can be treated as a hierarchy structure. There are some visualizations for presenting this structure:
 >- Circle Packing [demo]
 >
 >- Packing [demo]

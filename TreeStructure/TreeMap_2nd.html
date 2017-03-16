@@ -3,11 +3,11 @@
 <style>
 
 text {
-  font: 10px sans-serif;
+  font: 12px Georgia;
 }
 
 tspan:last-child {
-  font-size: 10px;
+  font-size: 12px;
   fill-opacity: 0.8;
 }
 
@@ -21,13 +21,18 @@ tspan:last-child {
 }
 
 </style>
+<div>
+<img src="../1st project/whiteband.png" , alt>
 <svg width="1300" height="1000"></svg>
+</div>
 <script src="//d3js.org/d3.v4.0.0-alpha.35.min.js"></script>
 <script>
 
-var svg = d3.select("svg"),
+var svg = d3.select("svg").style("display","block").style("margin","auto"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
+
+    viewpointwidth = document.documentElement.clientWidth;
 
 var format = d3.format(",d");
 
@@ -53,9 +58,9 @@ d3.csv("flare.csv", function(error, data) {
 
   var label = cell.append("text").attr("clip-path", function(d) { return "url(#clip-" + d.id + ")"; });
 
-  label.filter(function(d) { return d.children; }).selectAll("tspan").data(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1).split(/(?=[A-Z][^A-Z])/g).concat("\xa0" + format(d.value)); }).enter().append("tspan").attr("x", function(d, i) { return i ? null : 4; }).attr("y", 13).text(function(d) { return d; });
+  label.filter(function(d) { return d.children}).selectAll("tspan").data(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1).split(/(?=[A-Z][^A-Z])/g).concat("\xa0" + format(d.value)); }).enter().append("tspan").attr("x", function(d, i) { return i ? null : 4; }).attr("y", 13).text(function(d) { return d; });
 
-  label.filter(function(d) { return !d.children; }).selectAll("tspan").data(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1).split(/(?=[A-Z][^A-Z])/g).concat(format(d.value)); }).enter().append("tspan").attr("x", 4).attr("y", function(d, i) { return 13 + i * 10; })
+  label.filter(function(d) { return !d.children && (d.x1-d.x0)>34 && (d.y1 - d.y0)>34}).selectAll("tspan").data(function(d) { return d.id.substring(d.id.lastIndexOf(".") + 1).split(/(?=[A-Z][^A-Z])/g).concat(format(d.value)); }).enter().append("tspan").attr("x", 4).attr("y", function(d, i) { return 13 + i * 10; })
       .text(function(d) {return d; });
 
   cell.append("title").text(function(d) { return d.id + "\n" + format(d.value); });

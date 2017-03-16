@@ -2,12 +2,17 @@
 <meta charset="utf-8">
 <style type="text/css">
 	.node circle{
-		fill: #999;
+		fill: steelblue;
 	}
 	.node text{
-		font: 10px sans-serif;
+		font-size: 12px;
 	}
-
+	.node--internal circle {
+  		fill: #555;
+	}
+	.node--internal text {
+		text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+	}
 	.link{
 		fill: none;
 		stroke: #555;
@@ -15,11 +20,18 @@
 		stroke-width: 1.5px;
 	}
 </style>
-<svg width = "960" height= "960"></svg>
+<link href="../css/style2.css" rel="stylesheet" type="text/css">
+<div id="content">
+  <div class="inside">
+    <img src="../1st project/whiteband.png" , alt>
+	<svg width = "960" height= "960"></svg>
+	<img src="../1st project/whiteband.png" , alt>
+	<img src="../1st project/whiteband.png" , alt>
+	</div>
+	</div>
 <script src="//d3js.org/d3.v4.min.js"></script>
-
 <script type="text/javascript">
-	var svg = d3.select("svg"),
+	var svg = d3.select("svg").style("display","block").style("margin","auto"),
 		width = +svg.attr("width"),
 		height= +svg.attr("height"),
 		g = svg.append("g").attr("transform","translate(" + width/2+ ","+ height/2+ ")");
@@ -37,16 +49,22 @@
 
 		cluster(root);
 
-		var link = g.selectAll(".link").data(root.descendants().slice(1)).enter().append("path").attr("class","link").attr("d",function(d){
-			return "M" + project(d.x, d.y) + "C" + project(d.x, (d.y+d.parent.y)/2) +" "+ project(d.parent.x, (d.y + d.parent.y)/2)+ " " + project(d.parent.x, d.parent.y)
-		});
+		var link = g.selectAll(".link").data(root.descendants().slice(1));
 
-		var node = g.selectAll(".node").data(root.descendants()).enter().append("g").attr("class","node").attr("transform", function(d){return "translate("+ project(d.x, d.y)+ ")"});
+		  link.transition().delay(300).duration(600).attr("d",diagonal);
 
-		node.append("circle").attr("r", 2.7);
+		  link.enter().append("path").attr("class","link").attr("d",diagonal).style("opacity", 0).transition().duration(300).delay(function(d,i){return 14*i }).style("opacity", 1);
 
-		node.append("text").attr("dy",".31em").attr("x",function(d){return d.x < 180 ===!d.children? 6: -6}).attr("text-anchor", function(d){return d.x < 180 === !d.children? "start": "end"}).attr("transform",function(d){return "rotate(" + (d.x<180? d.x-90 : d.x+90)+ ")"}).text(function(d){return d.id.substring(d.id.lastIndexOf(".")+1)});
+		var node = g.selectAll(".node").data(root.descendants()).enter().append("g").attr("class", function(d) { return "node" + (d.children ? " node--internal" : " node--leaf"); }).attr("transform", function(d){return "translate("+ project(d.x, d.y)+ ")"});
+
+		node.append("circle").attr("r", 2.7).style("opacity", 0).transition().duration(300).delay(function(d,i){return 14*i}).style("opacity", 1);
+
+		node.append("text").attr("dy",".31em").attr("x",function(d){return d.x < 180 ===!d.children? 6: -6}).attr("text-anchor", function(d){return d.x < 180 === !d.children? "start": "end"}).style("opacity", 0).transition().duration(300).delay(function(d,i){return 14*i}).style("opacity", 1).attr("transform",function(d){return "rotate(" + (d.x<180? d.x-90 : d.x+90)+ ")"}).text(function(d){return d.id.substring(d.id.lastIndexOf(".")+1)});
 	})
+
+	function diagonal(d){
+			return "M" + project(d.x, d.y) + "C" + project(d.x, (d.y+d.parent.y)/2) +" "+ project(d.parent.x, (d.y + d.parent.y)/2)+ " " + project(d.parent.x, d.parent.y)
+		}
 
 	function project(x, y){
 		var angle = (x-90) / 180* Math.PI, radius=y;

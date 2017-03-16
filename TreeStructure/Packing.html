@@ -3,38 +3,42 @@
 <style>
 
 text {
-  font: 10px sans-serif;
+  font: 13px ;
   text-anchor: middle;
 }
 
-.node circle {
-  fill: #ddd;
-}
 
 .node:hover circle {
-  stroke: #000;
+  stroke: orange;
   stroke-width: 1.2px;
 }
 
 </style>
-<svg width="960" height="960"><g transform="translate(1,1)"></g></svg>
-<script src="//d3js.org/d3.v4.0.0-alpha.35.min.js"></script>
+<link href="../css/style2.css" rel="stylesheet" type="text/css">
+<div id="content">
+  <div class="inside">
+    <img src="../1st project/whiteband.png" , alt>
+    <svg width="960" height="960"><g transform="translate(1,1)"></g></svg>
+    <img src="../1st project/whiteband.png" , alt>
+    <img src="../1st project/whiteband.png" , alt>
+  </div>
+</div>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
 <script>
 
-var svg = d3.select("svg"),
+var svg = d3.select("svg").style("display","block").style("margin","auto"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
 
 var format = d3.format(",d");
 
-var pack = d3.pack()
-    .size([width - 2, height - 2])
-    .padding(1);
+var pack = d3.pack().size([width - 2, height - 2]).padding(1);
 
 var root
 d3.csv("flare.csv", type, function(error, data) {
   if (error) throw error;
-
+  var color_svg5 = d3.scaleSequential(d3.interpolateCool).domain([d3.min(data,function(d){return d.value}), d3.max(data,function(d){return d.value})]);
   root = d3.hierarchy({children: data})
       .sum(function(d) { return d.value; })
       .sort(function(a, b) { return b.value - a.value; });
@@ -50,7 +54,7 @@ d3.csv("flare.csv", type, function(error, data) {
 
   node.append("circle")
       .attr("id", function(d) { return "node-" + d.data.id; })
-      .attr("r", function(d) { return d.r; });
+      .attr("r", function(d) { return d.r; }).attr("fill",function(d){return color_svg5(d.data.value)});
 
   node.append("clipPath")
       .attr("id", function(d) { return "clip-" + d.data.id; })
