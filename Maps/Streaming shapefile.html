@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<canvas width="960" height="600"></canvas>
+<script src="https://d3js.org/d3-array.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
+<script src="https://unpkg.com/shapefile@0.5"></script>
+<script type="text/javascript">
+canvas = document.querySelector("canvas");
+
+context = canvas.getContext("2d");
+
+path = d3.geoPath().context(context).projection(d3.geoAlbersUsa().scale(1200).translate([canvas.width / 2, canvas.height / 2]));
+
+context.linewidth = 1;
+shapefile.open("cb_2014_us_county_500k.shp", null).then(function(source) {
+    return source.read().then(function next(result) {
+        if (result.done) return;
+        context.beginPath();
+        path(result.value);
+        context.stroke();
+        return source.read().then(next);
+    })
+}).catch(error => console.error(error.stack));
+</script>

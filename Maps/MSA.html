@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style type="text/css">
+	.background {
+	  fill: none;
+	  pointer-events: all;
+	}
+
+	.states {
+	  /*fill: url(#image);*/
+	  fill: #fff;
+	  stroke: #ccc;
+	  stroke-linejoin: round;
+      stroke-linecap: round;
+	}
+	.MSA{
+		fill: steelblue;
+		stroke: #ccc;
+	}
+</style>
+<div id="content">
+	<div class="inside">
+		<img src="../1st project/whiteband.png", alt>
+		<div class="inline"> <svg width = "960" height = "600">
+			<defs><pattern id="image" x="0" y="0" patternUnits="userSpaceOnUse" height="600" width="960">
+	     			<image x="0" y="0" xlink:href="../1st project/blue.png"></image>
+	    	</pattern></defs>
+		</svg> </div>
+		<div id="detail"></div>
+	</div>
+</div>
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="//d3js.org/topojson.v2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+	var  svg = d3.select("svg"),
+		width= +svg.attr("width"),
+		height=+svg.attr("height");
+
+	var path = d3.geoPath();
+
+	var path1 = d3.geoPath().projection(d3.geoAlbersUsa().scale(1070).translate([width / 2, height / 2-50]));
+
+	var statedata, msadata, newdata, centered;
+		d3.queue().defer(d3.json, "us.json").defer(d3.json,"MSA.json").await(ready);
+
+	function ready(error, state, msa){
+		if (error) throw error;
+
+		statedata = topojson.feature(state, state.objects.states);
+
+		msadata = topojson.feature(msa, msa.objects.msa);
+
+		svg.append("rect").attr("class","background").attr("width",width).attr("height",height).on("click",clicked);
+
+		g = svg.append("g").selectAll("path").data(statedata.features).enter().append("path").attr("class", "states").attr("d",path1).on("click",clicked);
+
+		m = svg.append("g").attr("id","MSAs").selectAll("path").data(msadata.features).enter().append("path").attr("class","MSA").attr("d",path).on("click", function(d){
+			$("#detail").load("USstateCentroids.json",function(){
+
+				var content = "<div class= tbname></div>"
+				content += "<table><tbody><tr><th>GEOID</th><th>"+d.properties.GEOID+"</th></tr>";
+				content += "<tr><th>NAME</th><th>"+d.properties.NAME+"</th></tr>";
+				content += "<tr><th>LandAera</th><th>"+d.properties.ALAND+"</th></tr>";
+				content += "<tr><th>WaterAera</th><th>"+d.properties.AWATER+"</th></tr>";
+				content += "</tbody></table>";
+				$(this).html(content);
+			})
+		});
+	}
+
+	function jsonFilter(data, value){
+		var result = new Array();
+		var array = data.features;
+		for( var indicator in array){
+			if( array[indicator].properties.LSAD === value){
+				result.push(array[indicator])
+			}
+		}
+		return result;
+	}
+
+	function clicked(d){
+		var x, y ,k;
+
+        if (d && centered !== d) {
+		    var centroid = path1.centroid(d);
+		    x = centroid[0];
+		    y = centroid[1];
+		    k = 2;
+		    centered = d;
+		} else {
+		    x = width / 2;
+		    y = height / 2;
+		    k = 1;
+		    centered = null;
+		}
+
+		g.selectAll("path").classed("active", centered && function(d) { return d === centered; });
+
+		g.transition().duration(500).attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")").style("stroke-width", 1.5 / k + "px");
+
+		m.transition().duration(500).attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")").style("stroke-width", 1.5 / k + "px");
+	}
+
+	function zoomed() {
+    	projection.translate(d3.event.translate).scale(d3.event.scale);
+    	g.selectAll("path").attr("d", path);
+	}
+
+</script>

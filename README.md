@@ -1,13 +1,38 @@
 This Repo is my visualization work. It includes variety of domains: maps, data structures, high dimensional data, etc..
 
-Practice Visualization
+Warmup Visualization
 =========
->Before I can handle the indivual project, I did some practice about how to present and realize the iteraction like **zoom**, **drag-move**, **click**, **moveover** amd **moveout**. The following link is the example visualizations:
+>Before I can handle an indivual project, I did some practice about how to present the data and realize the iteraction like **zoom**, **drag-move**, **click**, **moveover** and **moveout**. The following link is the example visualizations with interactions:
 [Example Visualizations](https://wangku.github.io/Visualizations/practice.html)
 
 Hierarchy Structure
 =========
 >As we all know
+>The data has the following structure as example.
+ id | value
+--------|--------
+flare |
+flare.analytics|
+flare.analytics.cluster|
+flare.analytics.cluster.AgglomerativeCluster|3938
+flare.analytics.cluster.CommunityStructure	|3812
+flare.animate	|
+flare.animate.Easing	|17010
+flare.animate.FunctionSequence	|5842
+>The table is part of **flare.csv** file. It has two columns, one is **id**, and the other is **value**. The **id** string is combined by one or several substrings with the symbol **'.'**, so it can be treated as a hierarchy structure. There are some visualizations for presenting this structure:
+>- Circle Packing [demo]
+>
+>- Packing [demo]
+>
+>- Tree [demo1] [demo2]
+>
+>- RadialTreeGraph [demo]
+>
+>- TreeMap [demo1] [demo2]
+>
+>- Sunburst [demo]
+>
+
 
 First Project
 =========
