@@ -61,17 +61,21 @@ Hierarchy Structure
 >- Sunburst [SunburstDemo](https://wangku.github.io/Visualizations/TreeStructure/Sunburst.html)
 >
 
+------------------
 
 First Project
 =========
 >This is my first complex project which is based on Dr.Yao's Nature paper *[Health ROI as a measure of misalignment of biomedical needs and resources](http://www.nature.com/nbt/journal/v33/n8/full/nbt.3276.html)*.
 
->
+>![NaturePaperVis.png](./image/NaturePaperVis.png)
+>The previous image is the screenshot of my visualization. It can be dividied into three parts, the left part is **Year Legend**, the middle part is **Circle Packing** and right part is the **Detail of Selection**. **Year legend** has 12 different colors, from green to red, mapping to 12 years data. When clicking the color section, we can choose to present the data for that year or hid. Certainly we can make a choice to show or block all data by clicking **Unselect All** section. In the **Circle Packing**, so many concentric circles are presented to form a large circle. Every circle represents one type of disease, it has 12 concentric rings with 12 different colors, and larger radius means larger ROI value. Clicking the circle, the detail information like **Totol burden in million** and **Pulications** of this disease will show in the right part.
 
->The visualization will be showed at the following website link:
+>For more deatil information, you can check the visualization showed at the following website link:
 [Nature Paper Visualization](https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html)
 
+-----------------
+
 Maps Visualization
-=========
+==========
 
 
