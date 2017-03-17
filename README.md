@@ -1,14 +1,27 @@
 This Repo is my visualization work. It includes variety of domains: maps, data structures, high dimensional data, etc..
 
+-------------------
 Warmup Visualization
 =========
->Before I can handle an indivual project, I did some practice about how to present the data and realize the iteraction like **zoom**, **drag-move**, **click**, **moveover** and **moveout**. The following link is the example visualizations with interactions:
+>Before I can handle an indivual project, I did some practice about how to present the data and realize the iteractive functions like **zoom**, **drag-move**, **click**, **moveover** and **moveout**. The following link is the example visualizations with interactions:
 [Example Visualizations](https://wangku.github.io/Visualizations/Practice/practice.html)
+
+>I also did some other regular graph like **stack bar graph**. It depends on the **[data_population.csv](https://github.com/Wangku/Visualizations/tree/gh-pages/Practice/data_population.csv)** file. The data has the following example structure:
+>State|Under 5 Years|	5 to 13 Years	|14 to 17 Years|	18 to 24 Years	|25 to 44 Years	|45 to 64 Years	|65 Years and Over
+>------|-----------------
+>AL|310504|552339|259034|450818|1231572|1215966|641667
+>AK|52083|85640|42153|74257|198724|183159|50277
+>AZ|515910|828669|362642|601943|1804762|1523681|862573
+>AR|202070|343207|157204|264160|754420|727124|407205
+>
+>First visualization I did is pretty normal stack bar graph. Different color represent different age range.
+
+--------------------
 
 Hierarchy Structure
 =========
 >As we all know.
->The data has the following structure as example.
+>The data has the following structure as example:
 
 > id | value
 >------------|------------
@@ -23,17 +36,17 @@ Hierarchy Structure
 
 
 >The table is part of **[flare.csv](https://github.com/Wangku/Visualizations/tree/gh-pages/flare.csv)** file. It has two columns, one is **id**, and the other is **value**. The **id** string is combined by one or several substrings with the symbol **'.'**, so it can be treated as a hierarchy structure. There are some visualizations for presenting this structure:
->- Circle Packing [Demo](https://wangku.github.io/Visualizations/TreeStructure/CirclePacking.html)
+>- Circle Packing [CirclePackingDemo](https://wangku.github.io/Visualizations/TreeStructure/CirclePacking.html)
 >
->- Packing     [Demo](https://wangku.github.io/Visualizations/TreeStructure/Packing.html)
+>- Packing     [PackingDemo](https://wangku.github.io/Visualizations/TreeStructure/Packing.html)
 >
->- Tree [Demo1](https://wangku.github.io/Visualizations/TreeStructure/Tree.html)
+>- Tree [TreeDemo](https://wangku.github.io/Visualizations/TreeStructure/Tree.html)
 >
->- RadialTreeGraph [Demo](https://wangku.github.io/Visualizations/TreeStructure/RadialTreeGraph.html)
+>- RadialTreeGraph [RadialTreeDemo](https://wangku.github.io/Visualizations/TreeStructure/RadialTreeGraph.html)
 >
->- TreeMap [Demo1](https://wangku.github.io/Visualizations/TreeStructure/TreeMap.html) [Demo2](https://wangku.github.io/Visualizations/TreeStructure/TreeMap_2nd.html)
+>- TreeMap [TreeMapDemo1](https://wangku.github.io/Visualizations/TreeStructure/TreeMap.html) [TreeMapDemo2](https://wangku.github.io/Visualizations/TreeStructure/TreeMap_2nd.html)
 >
->- Sunburst [Demo](https://wangku.github.io/Visualizations/TreeStructure/Sunburst.html)
+>- Sunburst [SunburstDemo](https://wangku.github.io/Visualizations/TreeStructure/Sunburst.html)
 >
 
 

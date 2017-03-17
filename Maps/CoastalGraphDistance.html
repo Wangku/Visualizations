@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<svg width = "960" height = "600"></svg>
-<div class="buttons" style="text-align: center"></div>
+<div id="content">
+	<div class="inside">
+		<img src="../1st project/whiteband.png", alt>
+		<h1>Coastal Distance Visualization</h1>
+		<img src="../1st project/whiteband.png", alt>
+		<div> <svg width = "960" height = "600">
+		</svg> </div>
+	</div>
+</div>
+<!-- <div class="buttons" style="text-align: center"></div>
 
 <style type="text/css">
 	.buttons{
@@ -10,27 +18,28 @@
     top: 50px;
     z-index: 1;
 	}
-</style>
+</style> -->
+<link href="../css/style.css" rel="stylesheet" type="text/css">
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <script type="text/javascript">
-	var svg = d3.select("svg"),
+	var svg = d3.select("svg").style("display","block").style("margin","auto"),
 		width = +svg.attr("width"),
 		height= +svg.attr("height");
 
-	var mode = ["Coastal","Population"];
+	// var mode = ["Coastal","Population"];
 
-	model = d3.select("div").selectAll("button").data(mode).enter().append("button").attr("id",function(d){return d}).text(function(d){return d});
+	// model = d3.select("div").selectAll("button").data(mode).enter().append("button").attr("id",function(d){return d}).text(function(d){return d});
 
-	d3.select("button#Coastal").on("click",function(){Remove(); Coastalmode()});
-	d3.select("button#Population").on("click",function(){Remove(); Populationmode()});
+	// d3.select("button#Coastal").on("click",function(){Remove(); Coastalmode()});
+	// d3.select("button#Population").on("click",function(){Remove(); Populationmode()});
 
-	function Remove(){
-		d3.selectAll("g").remove();
-		d3.selectAll("path").remove();
-	}
+	// function Remove(){
+	// 	d3.selectAll("g").remove();
+	// 	d3.selectAll("path").remove();
+	// }
 
-	function Coastalmode(){
+	// function Coastalmode(){
 
 		var path = d3.geoPath();
 
@@ -73,24 +82,24 @@
 
 			svg.append("path").attr("fill","none").attr("stroke","#ccc").attr("stroke-width",0.5).attr("stroke-linejoine", "round").attr("d",path(topojson.mesh(us, us.objects.counties,function(a,b){return a!==b;})));
 		}
-	}
+	// }
 
-	function Populationmode(){
+	// function Populationmode(){
 
-		var path = d3.geoPath().projection(null);
+	// 	var path = d3.geoPath().projection(null);
 
-		var color = d3.scaleLog().range(["hsl(62,100%,90%)", "hsl(228,30%,20%)"]).interpolate(d3.interpolateHcl);
+	// 	var color = d3.scaleLog().range(["hsl(62,100%,90%)", "hsl(228,30%,20%)"]).interpolate(d3.interpolateHcl);
 
-		d3.json("us_albers.json",function(error, us){
-			if (error) throw error;
+	// 	d3.json("us_albers.json",function(error, us){
+	// 		if (error) throw error;
 
-			var counties = topojson.feature(us, us.objects.counties).features;
+	// 		var counties = topojson.feature(us, us.objects.counties).features;
 
-			var densities= counties.map(function(d){return d.properties.density = d.properties.pop / path.area(d)}).sort(function(a,b){return a - b});
+	// 		var densities= counties.map(function(d){return d.properties.density = d.properties.pop / path.area(d)}).sort(function(a,b){return a - b});
 
-			color.domain([d3.quantile(densities,.01), d3.quantile(densities,.99)]);
+	// 		color.domain([d3.quantile(densities,.01), d3.quantile(densities,.99)]);
 
-			svg.append("g").attr("class","counties").selectAll("path").data(counties).enter().append("path").style("fill",function(d){return color(d.properties.density)}).attr("d",path);
-		})
-	}
+	// 		svg.append("g").attr("class","counties").selectAll("path").data(counties).enter().append("path").style("fill",function(d){return color(d.properties.density)}).attr("d",path);
+	// 	})
+	// }
 </script>

@@ -9,10 +9,12 @@ canvas = document.querySelector("canvas");
 
 context = canvas.getContext("2d");
 
-path = d3.geoPath().context(context).projection(d3.geoAlbersUsa().scale(1200).translate([canvas.width / 2, canvas.height / 2]));
+// path = d3.geoPath().context(context).projection(d3.geoAlbersUsa().scale(1200).translate([canvas.width / 2, canvas.height / 2]));
+
+path = d3.geoPath().context(context).projection(d3.geoConicEqualArea().parallels([34, 40.5]).scale(3500).rotate([120, 0]).translate([canvas.width / 2, canvas.height*7/8]))
 
 context.linewidth = 1;
-shapefile.open("cb_2014_us_county_500k.shp", null).then(function(source) {
+shapefile.open("cb_2015_06_tract_500k.shp", null).then(function(source) {
     return source.read().then(function next(result) {
         if (result.done) return;
         context.beginPath();
