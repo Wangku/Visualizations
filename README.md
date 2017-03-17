@@ -75,7 +75,3 @@ First Project
 
 -----------------
 
-Maps Visualization
-==========
-
-
