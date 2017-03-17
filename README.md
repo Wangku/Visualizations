@@ -17,7 +17,8 @@ Warmup Visualization
 >AR|202070|343207|157204|264160|754420|727124|407205
 >
 >First visualization I did is pretty normal stack bar graph. Different color represent different age range.
-![stackedbarchart.png](https://github.com/Wangku/Visualizations/tree/gh-pages/image/stackedbarchart.png)
+![stackedbarchart.png](./image/stackedbarchart.png)
+>You can also click the website link **[StackedBarChart](./Practice/Stacked_Bar_Chart.html)** to see the detail.
 
 --------------------
 
