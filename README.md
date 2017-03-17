@@ -15,10 +15,14 @@ Warmup Visualization
 >AK|52083|85640|42153|74257|198724|183159|50277
 >AZ|515910|828669|362642|601943|1804762|1523681|862573
 >AR|202070|343207|157204|264160|754420|727124|407205
->
+
 >First visualization I did is pretty normal stack bar graph. Different color represent different age range.
-![stackedbarchart.png](./image/stackedbarchart.png)
->You can also click the website link **[StackedBarChart](./Practice/Stacked_Bar_Chart.html)** to see the detail.
+![stackedbarchart.png](./image/StackedBar.png)
+>You can also click the website link **[StackedBarChart](https://wangku.github.io/Visualizations/Practice/Stacked_Bar_Chart.html)** to see the detail.
+
+>Then I did two variants. Same data source and same color representation, while using radial present method. You can check the following two website links finding the detail.
+>**[Radial_Stacked_Bar_1st](https://wangku.github.io/Visualizations/Practice/Radial_Stacked_Bar_1st.html)**
+>**[Radial_Stacked_Bar_2nd](https://wangku.github.io/Visualizations/Practice/Radial_Stacked_Bar_2nd.html)**
 
 --------------------
 
