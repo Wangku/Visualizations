@@ -7,6 +7,7 @@ Warmup Visualization
 [Example Visualizations](https://wangku.github.io/Visualizations/Practice/practice.html)
 
 >I also did some other regular graph like **stack bar graph**. It depends on the **[data_population.csv](https://github.com/Wangku/Visualizations/tree/gh-pages/Practice/data_population.csv)** file. The data has the following example structure:
+
 >State|Under 5 Years|5 to 13 Years|14 to 17 Years|18 to 24 Years|25 to 44 Years|45 to 64 Years|65 Years and Over
 >-------|------|-------|------|------|------|-------|------
 >AL|310504|552339|259034|450818|1231572|1215966|641667
