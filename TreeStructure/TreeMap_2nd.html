@@ -22,10 +22,10 @@ tspan:last-child {
 
 </style>
 <div>
-<img src="../1st project/whiteband.png" , alt>
+<!-- <img src="../1st project/whiteband.png" , alt> -->
 <svg width="1300" height="1000"></svg>
 </div>
-<script src="//d3js.org/d3.v4.0.0-alpha.35.min.js"></script>
+<script src="//d3js.org/d3.v4.min.js"></script>
 <script>
 
 var svg = d3.select("svg").style("display","block").style("margin","auto"),
@@ -36,11 +36,11 @@ var svg = d3.select("svg").style("display","block").style("margin","auto"),
 
 var format = d3.format(",d");
 
-var color = d3.scaleMagma().domain([-4, 4]);
+var color = d3.scaleSequential(d3.interpolateMagma).domain([-5, 5]);
 
 var stratify = d3.stratify().parentId(function(d) { return d.id.substring(0, d.id.lastIndexOf(".")); });
 
-var treemap = d3.treemap().size([width-2, height-2]).paddingOuter(3).paddingTop(19).paddingInner(1).round(true);
+var treemap = d3.treemap().size([width-2, height-2]).paddingOuter(3).paddingTop(19).paddingInner(1.5).round(true);
 
 d3.csv("flare.csv", function(error, data) {
   if (error) throw error;

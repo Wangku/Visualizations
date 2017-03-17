@@ -38,7 +38,7 @@ var pack = d3.pack().size([width - 2, height - 2]).padding(1);
 var root
 d3.csv("flare.csv", type, function(error, data) {
   if (error) throw error;
-  var color_svg5 = d3.scaleSequential(d3.interpolateCool).domain([d3.min(data,function(d){return d.value}), d3.max(data,function(d){return d.value})]);
+  var color_svg5 = d3.scaleSequential(d3.interpolateCool).domain([0, d3.max(data,function(d){return d.value})]);
   root = d3.hierarchy({children: data})
       .sum(function(d) { return d.value; })
       .sort(function(a, b) { return b.value - a.value; });

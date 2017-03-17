@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <style type="text/css">
 	body{
-		font: 10px sans-serif;
+		font: 10px Georgia;
 		position: relative;
 	}
 	.node{
@@ -53,7 +53,7 @@
 
 		tm = d3.select("body").selectAll(".node").data(root.leaves()).enter().append("div").attr("transform","translate(20,20)").attr("class","node").attr("title", function(d){return d.id});
 
-		tm.style("left", function(d){return (d.x0+(viewpointwidth-width)/2) +"px"}).style("top",function(d){return d.y0+30 +"px"}).style("width", function(d){return d.x1-d.x0 +"px"}).style("height",function(d){return d.y1-d.y0+"px"}).style("background",function(d){
+		tm.style("left", function(d){return (d.x0+(viewpointwidth-width)/2) +"px"}).style("top",function(d){return d.y0+"px"}).style("width", function(d){return d.x1-d.x0 +"px"}).style("height",function(d){return d.y1-d.y0+"px"}).style("background",function(d){
 			while (d.depth > 1)
 				d= d.parent;
 			return color(d.id);
