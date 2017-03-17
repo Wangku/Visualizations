@@ -5,7 +5,7 @@ This Repo is my visualization work. It includes variety of domains: maps, data s
 Warmup Visualization
 ===========
 >Before I can handle an indivual project, I did some practice about how to present the data and realize the iteractive functions like **zoom**, **drag-move**, **click**, **moveover** and **moveout**. The following link is the example visualizations with interactions:
-[Example Visualizations](https://wangku.github.io/Visualizations/Practice/practice.html)
+**[Example Visualizations](https://wangku.github.io/Visualizations/Practice/practice.html)**
 
 >I also did some other regular graph like **stack bar graph**. It depends on the **[data_population.csv](https://github.com/Wangku/Visualizations/tree/gh-pages/Practice/data_population.csv)** file. The data has the following example structure:
 
