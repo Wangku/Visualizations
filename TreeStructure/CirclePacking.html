@@ -38,10 +38,12 @@ text {
 
 	var pack = d3.pack().size([width-2,height-2]).padding(2);
 
+	var root;
+
 	d3.csv("flare.csv", function(error,data){
 		if(error) throw error;
 
-		var root = stratify(data).sum(function(d){return d.value}).sort(function(a,b){return b.value - a.value});
+		root = stratify(data).sum(function(d){return d.value}).sort(function(a,b){return b.value - a.value});
 
 		pack(root);
 

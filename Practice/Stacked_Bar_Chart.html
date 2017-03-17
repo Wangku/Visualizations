@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.axis .domain{display: none;}
+	</style>
+	</style>
+	<link href="../css/style2.css" rel="stylesheet" type="text/css">
+	<div id="content">
+    	<div class="inside">
+     	    <img src="../1st project/whiteband.png" , alt>
+			<h1>Stacked Bar Chart</h1>
+     	    <img src="../1st project/whiteband.png" , alt>
+			<svg width="1100" height ="600" ></svg>
+			<img src="../1st project/whiteband.png" , alt>
+			<img src="../1st project/whiteband.png" , alt>
+			<img src="../1st project/whiteband.png" , alt>
+			<img src="../1st project/whiteband.png" , alt>
+			<img src="../1st project/whiteband.png" , alt>
+
+		</div>
+	</div>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+
+	var svg = d3.select("svg").style("display","block").style("margin","auto"),
+	    margin = {top:20, right: 20, bottom:30, left:40},
+	    width  = +svg.attr("width")- margin.left- margin.right,
+	    height = +svg.attr("height") - margin.top - margin.bottom;
+
+	var x = d3.scaleBand().rangeRound([0,width]).paddingInner(0.05).align(0.05);
+
+	var y = d3.scaleLinear().rangeRound([height,0]);
+
+	var colors = d3.scaleOrdinal().range(["#79c6e5", "#3794ba", "#23577a", "#18631a", "#369b38", "#64c166", "#a6dba7"]);
+	var newdata;
+
+	d3.csv("data_population.csv", function(d,i,columns){
+		for(i=1, t = 0; i < columns.length; ++i)
+			t += d[columns[i]] = +d[columns[i]];
+			d.total = t;
+			return d;
+	},function(error,data){
+		if (error) throw error;
+
+		newdata = data;
+		var keys = data.columns.slice(1);
+
+		data.sort(function(a,b){return b.total - a.total});
+		x.domain(data.map(function(d){return d.State}));
+		y.domain([0, d3.max(data, function(d){return d.total})]).nice();
+		colors.domain(keys);
+
+		g	= svg.append("g").attr("transform", "translate(40, 20)");
+		g.append("g").selectAll("g").data(d3.stack().keys(keys)(data)).enter().append("g").attr("fill", function(d){return colors(d.key)}).selectAll("rect").data(function(d){return d}).enter().append("rect").attr("x",function(d){return x(d.data.State)}).attr("y", function(d){return y(d[1])}).attr("height",function(d){return y(d[0])- y(d[1])}).attr("width", x.bandwidth());
+
+		labelx = g.append("g").attr("class","axis").attr("transform","translate(0,"+height+")").call(d3.axisBottom(x));
+
+		labely = g.append("g").attr("class","axis").call(d3.axisLeft(y).ticks(null,"s")).append("text").attr("x",2).attr("y", y(y.ticks().pop())+0.5).attr("dy","0.32em").attr("fill","#000").attr("font-weight","bold").attr("text-anchor","start").text("Population");
+
+		legend = g.append("g").attr("text-anchor","end").selectAll("g").data(keys.slice().reverse()).enter().append("g").attr("transform",function(d,i){return "translate(0," + i*22+ ")"});
+		legend.append("rect").attr("x", width-20).attr("width", 20).attr("height",20).attr("fill",colors);
+		legend.append("text").attr("x",width-24).attr("y", 10).attr("dy","0.32em").text(function(d){return d;})
+	})
+</script>
+</body>

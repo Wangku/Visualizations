@@ -16,19 +16,22 @@
         font: 10px Georgia;
     }
 </style>
-<link href="./css/style2.css" rel="stylesheet" type="text/css">
-    <div id="content">
-        <div class="inside">
-            <img src="./1st project/whiteband.png" , alt>
-            <h1>Regular Visualization</h1>
-            <h2>Brush the time-period data</h2>
-            <p>This visualization is aim to present the regular time-period data, the data must include one attribute date, and the other attribute or attributes will be quantitative data. The following visualization realizes the zoom function</p>
-            <div id="brush"></div>
-            <h2>Stapplot from random data</h2>
-            <div id="stap"></div>
-            <svg heigh = "300" width = auto></svg>
-        </div>
+<link href="../css/style2.css" rel="stylesheet" type="text/css">
+<div id="content">
+    <div class="inside">
+        <img src="../1st project/whiteband.png" , alt>
+        <h1>Regular Visualization</h1>
+        <h2>Brush the time series data</h2>
+        <p>This visualization is aim to present the <strong>Time Series Data</strong> , one of the variables can be the date and time of each data case, and the other attribute or attributes will be quantitative data. The following visualization realizes the <strong>zoom</strong> and <strong>drag</strong> interactive functions.</p>
+        <div id="brush"></div>
+        <img src="../1st project/whiteband.png" , alt>
+        <h2>Stapplot from random data</h2>
+        <p>In the next visualization, it is a stapplot with 50 random data. Random data means the range and the domain will change everytime. This visualization can change its axis range to fit the value of data automatially. The size of circles depends on the second value of data, higher means larger. It realizes the <strong>click</strong>, <strong>mouseover</strong> and <strong>mouseout</strong> interactive functions</p>
+        <div id="stap"></div>
+        <svg heigh = "300" width = auto></svg>
     </div>
+
+</div>
 <script type="text/javascript">
     var width = 960,
         height= 500,

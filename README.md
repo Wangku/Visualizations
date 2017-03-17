@@ -3,7 +3,7 @@ This Repo is my visualization work. It includes variety of domains: maps, data s
 Warmup Visualization
 =========
 >Before I can handle an indivual project, I did some practice about how to present the data and realize the iteraction like **zoom**, **drag-move**, **click**, **moveover** and **moveout**. The following link is the example visualizations with interactions:
-[Example Visualizations](https://wangku.github.io/Visualizations/practice.html)
+[Example Visualizations](https://wangku.github.io/Visualizations/Practice/practice.html)
 
 Hierarchy Structure
 =========
