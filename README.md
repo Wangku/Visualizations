@@ -48,30 +48,30 @@ Hierarchy Structure
 
 
 >The table is part of **[flare.csv](./flare.csv)** file. It has two columns, one is **id**, and the other is **value**. The **id** string is combined by one or several substrings with the symbol **'.'**. In the example table, the id **flare.analytics.cluster.AgglomerativeCluster** has one more substring than the id **flare.analytics.cluster**, that means **flare.analytics.cluster** is the parent of **flare.analytics.cluster.AgglomerativeCluster**, so it can be treated as a hierarchy structure. There are some visualizations for presenting this data:
->- Circle Packing [CirclePackingDemo](https://wangku.github.io/Visualizations/TreeStructure/CirclePacking.html)
+>- Circle Packing **[CirclePackingDemo](https://wangku.github.io/Visualizations/TreeStructure/CirclePacking.html)**
 >
->- Packing     [PackingDemo](https://wangku.github.io/Visualizations/TreeStructure/Packing.html)
+>- Packing    ** [PackingDemo](https://wangku.github.io/Visualizations/TreeStructure/Packing.html)**
 >
->- Tree [TreeDemo](https://wangku.github.io/Visualizations/TreeStructure/Tree.html)
+>- Tree** [TreeDemo](https://wangku.github.io/Visualizations/TreeStructure/Tree.html)**
 >
->- RadialTreeGraph [RadialTreeDemo](https://wangku.github.io/Visualizations/TreeStructure/RadialTreeGraph.html)
+>- RadialTreeGraph **[RadialTreeDemo](https://wangku.github.io/Visualizations/TreeStructure/RadialTreeGraph.html)**
 >
->- TreeMap [TreeMapDemo1](https://wangku.github.io/Visualizations/TreeStructure/TreeMap.html) [TreeMapDemo2](https://wangku.github.io/Visualizations/TreeStructure/TreeMap_2nd.html)
+>- TreeMap** [TreeMapDemo1](https://wangku.github.io/Visualizations/TreeStructure/TreeMap.html) ** **[TreeMapDemo2](https://wangku.github.io/Visualizations/TreeStructure/TreeMap_2nd.html)**
 >
->- Sunburst [SunburstDemo](https://wangku.github.io/Visualizations/TreeStructure/Sunburst.html)
+>- Sunburst **[SunburstDemo](https://wangku.github.io/Visualizations/TreeStructure/Sunburst.html)**
 >
 
 ------------------
 
 First Project
 =========
->This is my first complex project which is based on Dr.Yao's Nature paper *[Health ROI as a measure of misalignment of biomedical needs and resources](http://www.nature.com/nbt/journal/v33/n8/full/nbt.3276.html)*.
+>This is my first complex project which is based on Dr.Yao's Nature paper** *[Health ROI as a measure of misalignment of biomedical needs and resources](http://www.nature.com/nbt/journal/v33/n8/full/nbt.3276.html)*.**
 
 >![NaturePaperVis.png](./image/NaturePaperVis.png)
 >The previous image is the screenshot of my visualization. It can be dividied into three parts, the left part is **Year Legend**, the middle part is **Circle Packing** and right part is the **Detail of Selection**. **Year legend** has 12 different colors, from green to red, mapping to 12 years data. When clicking the color section, we can choose to present the data for that year or hid. Certainly we can make a choice to show or block all data by clicking **Unselect All** section. In the **Circle Packing**, so many concentric circles are presented to form a large circle. Every circle represents one type of disease, it has 12 concentric rings with 12 different colors, and larger radius means larger ROI value. Clicking the circle, the detail information like **Totol burden in million** and **Pulications** of this disease will show in the right part.
 
 >For more deatil information, you can check the visualization showed at the following website link:
-[Nature Paper Visualization](https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html)
+**[Nature Paper Visualization](https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html)**
 
 -----------------
 
