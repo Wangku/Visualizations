@@ -16,20 +16,24 @@ Warmup Visualization
 >AZ|515910|828669|362642|601943|1804762|1523681|862573
 >AR|202070|343207|157204|264160|754420|727124|407205
 
->First visualization I did is pretty normal stack bar graph. Different color represent different age range.
+>It has 8 columns, first column shows the name of state, and the other seven columns show the population in different age range. First visualization I did is pretty normal stack bar graph. Different color represents different age range.
 ![stackedbarchart.png](./image/StackedBar.png)
 >You can also click the website link **[StackedBarChart](https://wangku.github.io/Visualizations/Practice/Stacked_Bar_Chart.html)** to see the detail.
 
 >Then I did two variants. Same data source and same color representation, while using radial present method. You can check the following two website links finding the detail.
+>
 >**[Radial_Stacked_Bar_1st](https://wangku.github.io/Visualizations/Practice/Radial_Stacked_Bar_1st.html)**
+>
 >**[Radial_Stacked_Bar_2nd](https://wangku.github.io/Visualizations/Practice/Radial_Stacked_Bar_2nd.html)**
 
 --------------------
 
 Hierarchy Structure
 =========
->As we all know.
->The data has the following structure as example:
+>**Hierarchy** is defined as __Data repository in which cases are related to subcases__. It can be thought of as imposing an ordering in which cases are parents or ancestors of other cases. The family histories, file/direcotry systems on computers and Object-oriented software classes are all hierarchy structure. 
+
+
+>I design and implement some visualizations to present the hierarchy structure. The data I used has the following structure as example:
 
 > id | value
 >------------|------------
@@ -43,7 +47,7 @@ Hierarchy Structure
 >flare.animate.FunctionSequence	|5842
 
 
->The table is part of **[flare.csv](https://github.com/Wangku/Visualizations/tree/gh-pages/flare.csv)** file. It has two columns, one is **id**, and the other is **value**. The **id** string is combined by one or several substrings with the symbol **'.'**, so it can be treated as a hierarchy structure. There are some visualizations for presenting this structure:
+>The table is part of **[flare.csv](./flare.csv)** file. It has two columns, one is **id**, and the other is **value**. The **id** string is combined by one or several substrings with the symbol **'.'**. In the example table, the id **flare.analytics.cluster.AgglomerativeCluster** has one more substring than the id **flare.analytics.cluster**, that means **flare.analytics.cluster** is the parent of **flare.analytics.cluster.AgglomerativeCluster**, so it can be treated as a hierarchy structure. There are some visualizations for presenting this data:
 >- Circle Packing [CirclePackingDemo](https://wangku.github.io/Visualizations/TreeStructure/CirclePacking.html)
 >
 >- Packing     [PackingDemo](https://wangku.github.io/Visualizations/TreeStructure/Packing.html)
@@ -62,8 +66,10 @@ First Project
 =========
 >This is my first complex project which is based on Dr.Yao's Nature paper *[Health ROI as a measure of misalignment of biomedical needs and resources](http://www.nature.com/nbt/journal/v33/n8/full/nbt.3276.html)*.
 
->The visualization will be showed at the following link:
-[Nature Paper Visualization](https://wangku.github.io/Visualizations/1st%20project/test_new.html)
+>
+
+>The visualization will be showed at the following website link:
+[Nature Paper Visualization](https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html)
 
 Maps Visualization
 =========
