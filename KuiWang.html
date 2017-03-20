@@ -1,143 +1,167 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<link href="https://fonts.googleapis.com/css?family=Jura" rel="stylesheet">
 <style type="text/css">
-html {
-    min-width: 1040px;
-    margin: 0;
-}
+    html {
+        min-width: 1040px;
+        margin: 0;
+    }
 
-body {
-    font-size: 16px/1.5em;
-    font-family: Helvetica, Georgia, Arial, Verdana, sans-serif;
-    margin: 1em 0 4em 0;
-    padding: 0;
-    overflow-x: hidden;
-    color: #000
-}
+    body {
+        font-size: 16px/1.5em;
+        font-family: Jura, Helvetica, Georgia, Arial, Verdana, sans-serif;
+        margin: 1em 0 4em 0;
+        padding: 0;
+        overflow-x: hidden;
+        color: #000
+    }
 
-.inside {
-    width: 1200px;
-    margin: auto auto;
-    position: relative
-}
+    .inside {
+        width: 1200px;
+        margin: auto auto;
+        position: relative
+    }
 
-.header {
-    margin-left: 2em;
-    margin-top: 30px;
-    font-size: 30px;
-}
+    .header {
+        margin-left: 2em;
+        margin-top: 30px;
+        font-size: 25px;
+    }
 
-h1 {
-    color: #555;
-    font-size: 64px;
-    font-weight: 200;
-    letter-spacing: -2px;
-    white-space: nowrap;
-    margin-top: 20px;
-}
+    h1 {
+        color: #555;
+        font-size: 64px;
+        font-weight: 200;
+        letter-spacing: -2px;
+        white-space: nowrap;
+        margin-top: 20px;
+    }
 
-h1,
-h2 {
-    text-rendering: optimizeLegibility;
-}
+    h1,
+    h2 {
+        text-rendering: optimizeLegibility;
+    }
 
-h2 {
-    margin-top: 2em;
-}
+    h2 {
+        margin-top: 2em;
+    }
 
-h2 a {
-    color: #ccc;
-    left: -20px;
-    position: absolute;
-    width: 740px;
-}
+    h2 a {
+        color: #ccc;
+        left: -20px;
+        position: absolute;
+        width: 740px;
+    }
 
-footer {
-    font-size: small;
-    margin-top: 8em;
-}
+    footer {
+        font-size: small;
+        margin-top: 8em;
+    }
 
-aside {
-    font-size: small;
-    left: 780px;
-    position: absolute;
-    width: 180px;
-}
+    aside {
+        font-size: small;
+        left: 780px;
+        position: absolute;
+        width: 180px;
+    }
 
-.column {
-    margin: auto;
-    width: 720px;
-    padding-right: 240px;
-    position: relative;
-}
+    .column {
+        margin: auto;
+        width: 720px;
+        padding-right: 240px;
+        position: relative;
+    }
 
-a {
-    color: steelblue;
-}
+    a {
+        color: steelblue;
+    }
 
-a:not(:hover) {
-    text-decoration: none;
-}
+    a:not(:hover) {
+        text-decoration: none;
+    }
 
-pre,
-code {
-    font-family: "Menlo", monospace;
-    -webkit-text-size-adjust: 100%;
-}
+    pre,
+    code {
+        font-family: "Menlo", monospace;
+        -webkit-text-size-adjust: 100%;
+    }
 
-code {
-    line-height: 1em;
-}
+    code {
+        line-height: 1em;
+    }
 
-pre {
-    border-left: solid 2px #ccc;
-    padding-left: 18px;
-    margin: 2em 0 2em -20px;
-}
+    pre {
+        border-left: solid 2px #ccc;
+        padding-left: 18px;
+        margin: 2em 0 2em -20px;
+    }
 
-.html .string,
-.javascript .string,
-.javascript .regexp {
-    color: #756bb1;
-}
+    .html .string,
+    .javascript .string,
+    .javascript .regexp {
+        color: #756bb1;
+    }
 
-.html .tag,
-.css .tag,
-.javascript .keyword {
-    color: #3182bd;
-}
+    .html .tag,
+    .css .tag,
+    .javascript .keyword {
+        color: #3182bd;
+    }
 
-.comment {
-    color: #636363;
-}
+    .comment {
+        color: #636363;
+    }
 
-.html .doctype,
-.javascript .number {
-    color: #31a354;
-}
+    .html .doctype,
+    .javascript .number {
+        color: #31a354;
+    }
 
-.html .attr,
-.css .attr,
-.javascript .class,
-.javascript .special {
-    color: #e6550d;
-}
+    .html .attr,
+    .css .attr,
+    .javascript .class,
+    .javascript .special {
+        color: #e6550d;
+    }
 </style>
+<!--  header division gives the link to Home, Examples and Source code;
+title division will give the title of name
+display division will present two pictures which can direct to the website
+column division will show ther personal informaion -->
 <div id="content">
     <div class="inside">
         <div class="header">
-            <a  href="./KuiWang.html">Home</a>
+            <b><a  href="./KuiWang.html">Home</a></b>
             <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations/wiki">Examples</a>
-            <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations/wiki">Examples</a>
-            <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations/wiki">Examples</a>
+            <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations">Source Code</a>
+            <a style="margin-left:.8em" href="#About">About</a>
         </div>
-        <div class="title">
+        <div class="title"></div>
+        <div id="display">
+            <svg>
+                <g>
+                    <a href="https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html"><img border="0" alt="NaturePaperVisualization" src="./image/Nature.png" width="600" height="575"></a>
+                    <a href=""><img src=""></a>
+                    <a href=""><img src=""></a>
+                </g>
+            </svg>
         </div>
-        <div class="display"> </div>
         <div class="column">
-            <h2> <a name="About" href="#About">#</a> About</h2>
+            <h2> <a name="About" href="#About"></a>About</h2>
         </div>
     </div>
 </div>
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<body>
+<script type="text/javascript">
+    var pagewidth = 1200,
+        canvas_height = 575;
+
+    var svg = d3.select("svg").attr("height",canvas_height).attr("width",pagewidth);
+
+    svg.selectAll("rect").append("g").attr("class","example-anchor").append("a")
+
+</script>
+</body>

@@ -21,7 +21,17 @@
   }
 
 </style>
+<div id="content">
+  <div class="inside">
+    <img src="../1st project/whiteband.png", alt>
+    <h1>Population Visualization</h1>
+    <img src="../1st project/whiteband.png", alt>
+    <div> <svg width = "960" height = "600">
+    </svg> </div>
+  </div>
+</div>
 <body>
+<link href="../css/style.css" rel="stylesheet" type="text/css">
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src="//d3js.org/topojson.v1.min.js"></script>
 <script>
@@ -35,7 +45,7 @@
 
   var zoom = d3.behavior.zoom().translate(projection.translate()).scale(projection.scale()).scaleExtent([height, 8 * height]).on("zoom", zoomed);
 
-  var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+  var svg = d3.select("svg").style("display","block").style("margin","auto");
 
   var g = svg.append("g").call(zoom);
 

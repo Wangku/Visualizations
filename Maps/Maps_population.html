@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<svg width="960" height="600"></svg>
+<div id="content">
+	<div class="inside">
+		<img src="../1st project/whiteband.png", alt>
+		<h1>Population Visualization</h1>
+		<img src="../1st project/whiteband.png", alt>
+		<div> <svg width = "960" height = "600">
+		</svg> </div>
+	</div>
+</div>
 <div class="buttons" style="text-align: center"></div>
 
 <style type="text/css">
@@ -11,11 +19,11 @@
     z-index: 1;
 	}
 </style>
-
+<link href="../css/style.css" rel="stylesheet" type="text/css">
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <script type="text/javascript">
-	var svg = d3.select("svg"),
+	var svg = d3.select("svg").style("display","block").style("margin","auto"),
 		width = +svg.attr("width"),
 		height= +svg.attr("height");
 
@@ -23,7 +31,7 @@
 
 	var path = d3.geoPath().projection(null);
 
-	var color = d3.scaleLog().range(["hsl(62,100%,90%)", "hsl(228,30%,20%)"]).interpolate(d3.interpolateHcl);
+	var color = d3.scaleLog().range(["hsl(130,90%,90%)", "hsl(300,85%,6%)"]).interpolate(d3.interpolateHcl);
 
 	d3.json("us_albers.json",function(error, us){
 		if (error) throw error;
