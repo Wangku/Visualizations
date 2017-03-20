@@ -29,7 +29,6 @@
 	}
 	.inlinecircle{
 		width: 32%;
-		margin-left: 180px;
 	}
 
 	.inlinemap{
@@ -79,9 +78,9 @@
     }
 
     h2 {
-    	font-size: 24px;
+    	font-size: 20px;
     	font-weight: 300;
-    	margin: 8px 0px 8px 20px;
+    	margin: 5px 0px 5px 20px;
 
     }
 	h3{
@@ -120,8 +119,8 @@
     	<h4 style="text-align: center">Visualizations</h4></div>
 		<div id="menu" class="inline">
 	        <a style="margin-left:14em" href="./KuiWang.html" text-decoration="overline">Home</a>
-	        <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations/wiki">Examples</a>
-	        <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations">Source Code</a>
+	        <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations/wiki" target="_blank">Examples</a>
+	        <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations" target="_blank">Source Code</a>
 	        <a style="margin-left:.8em" href="#About">About</a>
         </div>
     </div>
@@ -132,17 +131,17 @@
 <div class="clearfix">
 	<div class="container">
 		<div id="circle" class="inlinecircle">
-			<a id="circlelink" href="https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html"><img id="circleimg" src="./image/Nature.png" ></a>
+			<a id="circlelink" href="https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html" target="_blank"><img id="circleimg" src="./image/Nature.png" ></a>
 		</div>
 		<div id="maps" class="inlinemap">
-			<a id="maplink" href="https://wangku.github.io/Visualizations/Maps/Maps_population.html"><img id="mapimg" src="./image/Population.png"></a>
+			<a id="maplink" href="https://wangku.github.io/Visualizations/Maps/Maps_population.html" target="_blank"><img id="mapimg" src="./image/Population.png"></a>
 		</div>
 	</div>
 </div>
 <div class="column">
     <h3> <a name="About" href="#About"></a>Contact Information:</h3>
 	<h2>Kui Wang</h2>
-	<i><h2>Research Trainee</h2></i>
+	<h2>Research Trainee</h2>
 	<h2>541.602.8182</h2>
 	<h2><a href="mailto:wangkuigis@gmail.com">wangkuigis@gmail.com</a></h2>
 </div>
@@ -153,39 +152,39 @@
 	$(window).load(function(){
 		var links1 = ["https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html","https://wangku.github.io/Visualizations/TreeStructure/CirclePacking.html","https://wangku.github.io/Visualizations/TreeStructure/RadialTree.html","https://wangku.github.io/Visualizations/TreeStructure/Sunburst.html"];
 
-	var links2 = ["https://wangku.github.io/Visualizations/Maps/Maps_population.html","https://wangku.github.io/Visualizations/Maps/CoastalGraphDistance.html","https://wangku.github.io/Visualizations/Maps/MSA.html"];
+		var links2 = ["https://wangku.github.io/Visualizations/Maps/Maps_population.html","https://wangku.github.io/Visualizations/Maps/CoastalGraphDistance.html","https://wangku.github.io/Visualizations/Maps/MSA.html"];
 
-	var images1=["./image/Nature.png","./image/CirclePacking.png","./image/RadialTree.png","./image/Sunburst.png"];
+		var images1=["./image/Nature.png","./image/CirclePacking.png","./image/RadialTree.png","./image/Sunburst.png"];
 
-	var images2=["./image/Population.png","./image/Coastal.png","./image/MSA.png"];
+		var images2=["./image/Population.png","./image/Coastal.png","./image/MSA.png"];
 
-	var i = 1, j=0;
+		var i = 1, j=0;
 
-	setInterval(function(){
-		$("#circleimg").fadeOut(1500, function() {
+		setInterval(function(){
+			$("#circleimg").fadeOut(800, function() {
 
-			document.getElementById("circleimg").src = images1[i];
-			document.getElementById("circlelink").href = links1[i];
-			$("#circleimg").fadeIn(1500);
-			i +=1;
-		});
-		if( i == images1.length) i = 0;
-	},5000);
+				document.getElementById("circleimg").src = images1[i];
+				document.getElementById("circlelink").href = links1[i];
+				$("#circleimg").fadeIn(1500);
+				i +=1;
+			});
+			if( i == images1.length) i = 0;
+		},5000);
 
-	setInterval(function(){
-		$("#mapimg").fadeOut(1500,function(){
-			if(j == images2.length - 1){
-				j = 0;
-			}
-			else{
-				j+=1;
-			}
-			document.getElementById("mapimg").src = images2[j];
-			document.getElementById("maplink").href = links2[j];
-			$("#mapimg").fadeIn(1500);
-		})
+		setInterval(function(){
+			$("#mapimg").fadeOut(800,function(){
+				if(j == images2.length - 1){
+					j = 0;
+				}
+				else{
+					j+=1;
+				}
+				document.getElementById("mapimg").src = images2[j];
+				document.getElementById("maplink").href = links2[j];
+				$("#mapimg").fadeIn(1500);
+			})
 
-	},5000);
+		},5000);
 	})
 
 
