@@ -6,6 +6,7 @@
     html {
         min-width: 1040px;
         margin: 0;
+        background-color:#fff;
     }
 
     body {
@@ -17,6 +18,18 @@
         color: #000
     }
 
+	.inline, .inlinemap, .inlinecircle {
+		display: inline-block;
+		margin-top:20px;
+	}
+	.inlinecircle{
+		margin-left: 180px;
+	}
+
+	.inlinemap{
+		margin-left: 50px;
+	}
+
     .inside {
         width: 1200px;
         margin: auto auto;
@@ -25,53 +38,49 @@
 
     .header {
         margin-left: 2em;
-        margin-top: 30px;
+        margin-top: 10px;
         font-size: 25px;
+    }
+    .column {
+        margin: auto;
+        width: 820px;
+        padding-right: 300px;
+        position: relative;
+    }
+    .forn{
+    	width: 100%;
+    	height: 620px;
+    	margin: auto;
+    }
+    h1 {
+        color: #555;
+        font-size: 72px;
+        font-weight: 200;
+        letter-spacing: -5px;
+        white-space: nowrap;
+        margin-top: 10px;
+        margin-bottom: 0px;
     }
 
     h1 {
-        color: #555;
-        font-size: 64px;
-        font-weight: 200;
-        letter-spacing: -2px;
-        white-space: nowrap;
-        margin-top: 20px;
-    }
-
-    h1,
-    h2 {
         text-rendering: optimizeLegibility;
     }
 
     h2 {
-        margin-top: 2em;
-    }
+    	font-size: 24px;
+    	font-weight: 300;
+    	margin: 8px 0px 8px 20px;
 
-    h2 a {
-        color: #ccc;
-        left: -20px;
-        position: absolute;
-        width: 740px;
     }
-
-    footer {
-        font-size: small;
-        margin-top: 8em;
-    }
-
-    aside {
-        font-size: small;
-        left: 780px;
-        position: absolute;
-        width: 180px;
-    }
-
-    .column {
-        margin: auto;
-        width: 720px;
-        padding-right: 240px;
-        position: relative;
-    }
+	h3{
+		font-size: 35px;
+		margin-bottom: 5px;
+	}
+	h4{
+		color: lightsteelblue;
+		font-size: 42px;
+		margin: 0px 0px 0px 25px;
+	}
 
     a {
         color: steelblue;
@@ -81,87 +90,87 @@
         text-decoration: none;
     }
 
-    pre,
-    code {
-        font-family: "Menlo", monospace;
-        -webkit-text-size-adjust: 100%;
+    p{
+    	font-size: 18px;
+    	margin: 8px 0px 8px 0px;
     }
 
-    code {
-        line-height: 1em;
-    }
-
-    pre {
-        border-left: solid 2px #ccc;
-        padding-left: 18px;
-        margin: 2em 0 2em -20px;
-    }
-
-    .html .string,
-    .javascript .string,
-    .javascript .regexp {
-        color: #756bb1;
-    }
-
-    .html .tag,
-    .css .tag,
-    .javascript .keyword {
-        color: #3182bd;
-    }
-
-    .comment {
-        color: #636363;
-    }
-
-    .html .doctype,
-    .javascript .number {
-        color: #31a354;
-    }
-
-    .html .attr,
-    .css .attr,
-    .javascript .class,
-    .javascript .special {
-        color: #e6550d;
-    }
 </style>
-<!--  header division gives the link to Home, Examples and Source code;
-title division will give the title of name
-display division will present two pictures which can direct to the website
-column division will show ther personal informaion -->
-<div id="content">
-    <div class="inside">
-        <div class="header">
-            <b><a  href="./KuiWang.html">Home</a></b>
-            <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations/wiki">Examples</a>
-            <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations">Source Code</a>
-            <a style="margin-left:.8em" href="#About">About</a>
-        </div>
-        <div class="title"></div>
-        <div id="display">
-            <svg>
-                <g>
-                    <a href="https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html"><img border="0" alt="NaturePaperVisualization" src="./image/Nature.png" width="600" height="575"></a>
-                    <a href=""><img src=""></a>
-                    <a href=""><img src=""></a>
-                </g>
-            </svg>
-        </div>
-        <div class="column">
-            <h2> <a name="About" href="#About"></a>About</h2>
+<div class="inside">
+    <div class="header">
+    	<div id="title" class="inline"><h1>Kui Wang's</h1>
+    	<h4>Visualizations</h4></div>
+		<div id="menu" class="inline">
+	        <b><a style="margin-left:14em" href="./KuiWang.html" text-decoration="overline">Home</a></b>
+	        <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations/wiki">Examples</a>
+	        <a style="margin-left:.8em" href="https://github.com/Wangku/Visualizations">Source Code</a>
+	        <a style="margin-left:.8em" href="#About">About</a>
         </div>
     </div>
 </div>
+
+<hr style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=5)" width="100%" color=gray SIZE=2>
+
+<div class="container">
+	<svg  class="forn">
+		<foreignObject x="0" y="0" width=100% height = 100%>
+			<div id="circle" class="inlinecircle">
+				<a id="circlelink" href="https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html"><img id="circleimg" src="./image/Nature.png" width="600" height="575"></a>
+			</div>
+			<div id="maps" class="inlinemap">
+				<a id="maplink" href="https://wangku.github.io/Visualizations/Maps/Maps_population.html"><img id="mapimg" src="./image/Population.png" width="900" height="600"></a>
+			</div>
+		</foreignObject>
+	</svg>
+</div>
+<div class="column">
+    <h3> <a name="About" href="#About"></a>Contact Information:</h3>
+	<h2>Kui Wang</h2>
+	<i><h2>Research Trainee</h2></i>
+	<h2>541.602.8182</h2>
+	<h2><a href="mailto:wangkuigis@gmail.com">wangkuigis@gmail.com</a></h2>
+</div>
+
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<body>
 <script type="text/javascript">
-    var pagewidth = 1200,
-        canvas_height = 575;
+	$(window).load(function(){
+		var links1 = ["https://wangku.github.io/Visualizations/1st%20project/NaturePaperVisualization.html","https://wangku.github.io/Visualizations/TreeStructure/CirclePacking.html","https://wangku.github.io/Visualizations/TreeStructure/RadialTree.html","https://wangku.github.io/Visualizations/TreeStructure/Sunburst.html"];
 
-    var svg = d3.select("svg").attr("height",canvas_height).attr("width",pagewidth);
+	var links2 = ["https://wangku.github.io/Visualizations/Maps/Maps_population.html","https://wangku.github.io/Visualizations/Maps/CoastalGraphDistance.html","https://wangku.github.io/Visualizations/Maps/MSA.html"];
 
-    svg.selectAll("rect").append("g").attr("class","example-anchor").append("a")
+	var images1=["./image/Nature.png","./image/CirclePacking.png","./image/RadialTree.png","./image/Sunburst.png"];
+
+	var images2=["./image/Population.png","./image/Coastal.png","./image/MSA.png"];
+
+	var i = 1, j=0;
+
+	setInterval(function(){
+		$("#circleimg").fadeOut(800, function() {
+
+			document.getElementById("circleimg").src = images1[i];
+			document.getElementById("circlelink").href = links1[i];
+			$("#circleimg").fadeIn(1500);
+			i +=1;
+		});
+		if( i == images1.length) i = 0;
+	},5000);
+
+	setInterval(function(){
+		$("#mapimg").fadeOut(800,function(){
+			if(j == images2.length - 1){
+				j = 0;
+			}
+			else{
+				j+=1;
+			}
+			document.getElementById("mapimg").src = images2[j];
+			document.getElementById("maplink").href = links2[j];
+			$("#mapimg").fadeIn(1500);
+		})
+
+	},5000);
+	})
+
 
 </script>
-</body>
