@@ -1,6 +1,3 @@
-This Repo is my visualization work. It includes variety of domains: maps, data structures, high dimensional data, etc..
-
--------------------
 
 Warm-up Visualization
 ===========
