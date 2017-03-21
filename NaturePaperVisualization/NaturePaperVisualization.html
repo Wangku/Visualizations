@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<div id="content">
+		<div class="inside">
+			<img src="whiteband.png", alt>
+			<h1 id = 'tit' ></h1>
+			<div class="fill">
+
+			<h2 id = "about"></h2>
+				<div class = "citation">
+					<p> This visualization is based on the following citation:</p>
+					<p><a href="http://www.nature.com/nbt/journal/v33/n8/full/nbt.3276.html">Health ROI as a measure of misalignment of biomedical needs and resources</a>. Yao L, Li Y, Ghosh S, Evans JA, Rzhetsky A.<em> Nat Biotechnol</em>. 2015 Aug 7; 33(8):807-11.</p>
+				</div>
+			<h2 id = "visual"></h2>
+			<h3 id ='sentense1'></h2>
+			<div id='under' class="bigdiv">
+				<div id='bar_under' class="inline"></div>
+				<div id='circle_under'></div>
+				<div id='canvas_under' class='inline'></div>
+				<div id="detail_under"></div>
+			</div>
+
+			<h3 id ='sentense2'></h2>
+			<div id="over">
+				<div id='bar_over' class="inline"></div>
+				<div id='circle_over'></div>
+				<div id='canvas_over' class='inline'></div>
+				<div id='detail_over'></div>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+	<script type="text/javascript">
+
+	    //	https://github.com/wbkd/d3-extended
+	    //	functions for moveToFront and moveToBack
+	    d3.selection.prototype.moveToFront = function() {
+	      return this.each(function(){
+	        this.parentNode.appendChild(this);
+	      });
+	    };
+	    d3.selection.prototype.moveToBack = function() {
+	        return this.each(function() {
+	            var firstChild = this.parentNode.firstChild;
+	            if (firstChild) {
+	                this.parentNode.insertBefore(this, firstChild);
+	            }
+	        });
+	    };
+
+
+		d3.select("#tit").text("Nature Paper Visualization").attr("style","h1");
+		d3.select("#about").text("About");
+		d3.select("#visual").text("Visualization");
+		d3.select("#sentense1").text("               The Temporal Trend of ROI for Under-studied Health Conditions during 2000-2011");
+		d3.select("#sentense2").text("The Temporal Trend of ROI for Over-studied Health Conditions during 2000-2011");
+
+
+		var _color=["#FF1900", "#FF3300", "#FF6600", "#FF9900", "#FFCC00", "#FFFF00", "#E6F500", "#CCEB00", "#99D600", "#66C200", "#33AD00", "#009900"];
+
+		var width = 580,
+			height= 500,
+			bar_width = 70,
+			circle_width = 170;
+		var under = 1,
+			over  = 0;
+
+		var years,colors,bonfdata,confdata,under_data,over_data= {};
+	//	var new_data = new Array();
+		var ERscale,RscaleS,root_under,root_over;
+
+		var format =d3.format(".2e");
+
+		var pack =d3.pack().size([width,height]).padding(1);
+
+		d3.csv("Nature_data.csv",function(error, data){
+
+			if (error) throw error;
+
+			data.forEach(function(d){
+				d["year"]= +d["year"];
+				d["total_burden_in_million"] = +d["total_burden_in_million"];
+				d["publication"] = +d["publication"];
+				d["trial"] = +d["trial"];
+				d["ROI"] = +d["ROI"];
+
+			});
+
+			Max = d3.max(data.map(function(d){return d.ROI}));
+			Ex = Math.ceil(Math.log(Max)/Math.log(10));
+			Rscale = d3.scale.log().base(Math.E).domain([Math.exp(0), Math.exp(Ex)]).range([1,45]);
+
+			Min = d3.min(data.map(function(d){return d.ROI}));
+			ExS = Math.floor(Math.log(Min)/Math.log(10));
+			RscaleS = d3.scale.log().base(Math.E).domain([Math.exp(ExS), Math.exp(0)]).range([45,1]);
+
+			years = d3.nest().key(function(d){return d.year}).entries(data);
+
+			colors = d3.scale.ordinal().domain([2011,2010,2009,2008,2007,2006,2005,2004,2003,2002,2001,2000]).range([_color[0],_color[1],_color[2],_color[3],_color[4],_color[5],_color[6],_color[7],_color[8],_color[9],_color[10],_color[11]]);
+
+
+			confdata = data.filter(function(d){return d.ROI >= 1});
+			confdata.type = under;
+			bonfdata = data.filter(function(d){return d.ROI < 1});
+			bonfdata.type = over;
+
+			under_data= Under(confdata);
+			over_data = Over(bonfdata);
+
+
+			root_under = d3.hierarchy({children:under_data}).sum(function(a){return scale_under(a.maxData,4)}).sort(function(a,b){return b.value - a.value});
+
+			root_over = d3.hierarchy({children:over_data}).sum(function(a){return scale_over(a.minData,4)}).sort(function(a,b){return b.value - a.value});
+
+
+			pack(root_under);
+			pack(root_over);
+
+			canvas = d3.select("#canvas_under").append("svg").attr("width",width).attr("height",height);
+
+			circles = canvas.selectAll("g").data(root_under.children).enter().append("g").attr("class", "base").attr("transform",function(e){return "translate(" +e.x +","+ e.y +")"});
+
+			circles.append("circle").attr("class","basecircle").attr("id",function(e){return e.data.key}).attr("r",function(e){return e.r}).attr("fill","white");
+
+			circles.each(function(e){
+				var new_dirct = [];
+				for(i in e.data.values){
+					new_dirct.push(e.data.values[i])
+				}
+				Sunder = d3.scale.linear().domain([0,scale_under(e.data.maxData,4)]).range([0,e.r]);
+
+				d3.select(this).selectAll("yearcircle").data(new_dirct).enter().append("circle").attr("class","yearcircle").attr("cx",0).attr("cy",0).attr("fill","none").attr("stroke", function(f){return colors(f.year)}).attr("r",function(f){return Sunder(scale_under(f.ROI,4))});
+			});
+
+			label = circles.append("g").attr("class","label").attr("transform","translate(0, -40)").attr("visibility","hidden").each(function(e){
+
+				bg = d3.select(this).append("rect").attr("fill","white");
+				text = d3.select(this).append("text").attr("x",0).attr("y",0).style("text-anchor","middle").text(function(h){return h.data.key});
+				bbox = text.node().getBBox();
+				bg.attr("width", bbox.width+20).attr("height",bbox.height*2).attr("x",-bbox.width/2-10).attr("y", - bbox.height);
+			});
+
+			label.select(".text").moveToFront();
+
+			circles.on("click",function(e){
+				d3.selectAll(".base").attr("opacity", function(f){
+					if(e.data.key == f.data.key){return 1}
+					else{return 0.3	}
+				});
+				d3.select(this).moveToFront();
+				d3.select(this).selectAll(".label").attr("visibility","visible");
+
+				$("#detail_under").load("Nature_data.csv?PheWAS_name="+e.data.key, function(){
+
+					tmp = confdata.filter(function(h){return h.PheWAS_name == e.data.key});
+
+					var new_data = [];
+
+					for(i in tmp){
+						new_data.push([tmp[i].year,format(tmp[i].total_burden_in_million),tmp[i].publication,tmp[i].trial,format(tmp[i].ROI)]);
+					};
+
+					var content = "<div class= tbname>"+ e.data.key +"</div>";
+					content += "<table><tbody><tr><th>Year</th><th>Total_burden_in_million</th><th>Publication</th><th>Trial</th><th>ROI</th></tr>";
+					for(i in new_data){
+						content += "<tr>";
+						for (j in new_data[i]){
+							content += '<td>' + new_data[i][j] + '</td>';
+						}
+						content += "</tr>";
+					}
+					content += "</tbody></table>";
+					$(this).html(content);
+				});
+			}).on("mouseout",function(e){
+				d3.selectAll(".base").attr("opacity",1);
+				d3.select(this).selectAll(".label").attr("visibility","hidden");
+			});
+
+
+			//second part
+			canvas = d3.select("#canvas_over").append("svg").attr("width",width).attr("height",height);
+
+			circles = canvas.selectAll("g").data(root_over.children).enter().append("g").attr("class", "base")
+							.attr("transform",function(e){return "translate(" +e.x +","+ e.y +")"});
+
+			circles.append("circle").attr("class","basecircle").attr("id",function(e){return e.data.key}).attr("r",function(e){return e.r}).attr("fill","white");
+			circles.each(function(e){
+				var new_dirct = [];
+				for(i in e.data.values){
+					new_dirct.push(e.data.values[i])
+				}
+				Sunder_over = d3.scale.linear().domain([0,scale_over(e.data.minData,4)]).range([0,e.r]);
+				d3.select(this).selectAll("yearcircle").data(new_dirct).enter().append("circle").attr("class","yearcircle").attr("cx",0).attr("cy",0).attr("fill","none").attr("stroke", function(f){return colors(f.year)}).attr("r",function(f){return Sunder_over(scale_over(f.ROI,4))});
+			})
+
+			label = circles.append("g").attr("class","label").attr("transform","translate(0, -40)").attr("visibility","hidden").each(function(e){
+
+				bg = d3.select(this).append("rect").attr("fill","white");
+				text = d3.select(this).append("text").attr("x",0).attr("y",0).style("text-anchor","middle").text(function(h){return h.data.key});
+				bbox = text.node().getBBox();
+				bg.attr("width", bbox.width+20).attr("height",bbox.height*2).attr("x",-bbox.width/2-10).attr("y", - bbox.height);
+			});
+
+			label.select(".text").moveToFront();
+
+			circles.on("click",function(e){
+				d3.selectAll(".base").attr("opacity", function(f){
+					if(e.data.key == f.data.key){return 1}
+					else{return 0.3	}
+				});
+				d3.select(this).moveToFront();
+				d3.select(this).selectAll(".label").attr("visibility","visible");
+
+				$("#detail_over").load("Nature_data.csv?PheWAS_name="+e.data.key, function(){
+
+					tmp = bonfdata.filter(function(h){return h.PheWAS_name == e.data.key});
+					var new_data = [];
+
+					for(i in tmp){
+
+						new_data.push([tmp[i].year,format(tmp[i].total_burden_in_million),tmp[i].publication,tmp[i].trial,format(tmp[i].ROI)]);
+					};
+
+
+					var content = "<div class= tbname>"+ e.data.key +"</div>";
+					content += "<table><tbody><tr><th>Year</th><th>Total_burden_in_million</th><th>Publication</th><th>Trial</th><th>ROI</th></tr>";
+					for(i in new_data){
+						content += "<tr>";
+						for (j in new_data[i]){
+							content += '<td>' + new_data[i][j] + '</td>';
+						}
+						content += "</tr>";
+					}
+					content += "</tbody></table>";
+					$(this).html(content);
+				});
+			}).on("mouseout",function(e){
+				d3.selectAll(".base").attr("opacity",1);
+				d3.select(this).selectAll(".label").attr("visibility","hidden");
+			});
+
+
+			drawYearMeter(confdata);
+			drawYearMeter(bonfdata);
+
+
+		})
+
+		function scale_under(d,i){
+			R = Rscale(d);
+			while(i--){
+				R = R *Rscale(d)
+			}
+			return R;
+		}
+
+		function scale_over(d,i){
+			R = RscaleS(d);
+			while(i--){
+				R = R *RscaleS(d)
+			}
+			return R;
+		}
+
+		function Under(d){
+			numbers = d3.nest().key(function(d){return d.PheWAS_name}).entries(d);
+			for(var x in numbers){
+				var temp = numbers[x];
+				var max = - Infinity;
+				for(var y in temp.values){
+
+					if (temp.values[y].ROI > max) {
+						max =temp.values[y].ROI;}
+				}
+				numbers[x].maxData = max;
+			}
+			return numbers;
+		}
+
+		function Over(d){
+			numbers_over = d3.nest().key(function(d){return d.PheWAS_name}).entries(d);
+			for(var x in numbers_over){
+				var temp = numbers_over[x];
+				var min = Infinity;
+				for(var y in temp.values){
+					if (temp.values[y].ROI < min) {
+						min =temp.values[y].ROI;
+					}
+				}
+				numbers_over[x].minData = min;
+			}
+			return numbers_over;
+		}
+
+		function drawYearMeter(d){
+			len = years.length;
+			step = (height-20)/ len;
+			years_swith=[];
+			for(var i=len-1; i >=0; i--){
+				years_swith.push({"year":years[i].key, "flag": 1})
+			};
+
+			if(d.type == 1){
+				svg = d3.select("#bar_under").append("svg").attr("height", height).attr("width", bar_width);
+			}
+			else{svg = d3.select("#bar_over").append("svg").attr("height", height).attr("width", bar_width);}
+
+			head = svg.append("g").attr("class","barhead")
+					              .on("click", function(){
+					              	text = d3.select(this).select("text").text();
+					              	if(text == "Unselect All"){
+					              		d3.selectAll(".barhead").select("text").text("Select All");
+					              		d3.selectAll(".barhead").select("rect").attr("fill", "lightgray");
+					              		d3.selectAll(".yearlegend").attr("opacity", function(s){
+					              			s.flag = 0;
+					              			return 0;
+					              		});
+					              		d3.selectAll(".yearcircle").attr("opacity", 0);
+					              	}
+					              	else{
+					              		d3.selectAll(".barhead").select("text").text("Unselect All");
+					              		d3.selectAll(".barhead").select("rect").attr("fill", "gray");
+					              		d3.selectAll(".yearlegend").attr("opacity", function(s){
+					              			s.flag = 1;
+					              			return 1;
+					              		});
+					              		d3.selectAll(".yearcircle").attr("opacity", 1);
+					              	}
+					              });
+
+			head.append("rect").attr("x", 0).attr("y", 0).attr("width", bar_width).attr("height",20).attr("fill","gray");
+			head.append("text").text("Unselect All").style("text-anchor", "middle").attr("font-size", "8px").attr("transform", "translate(" +bar_width/2+ ",12)" );
+
+			bar = svg.append("g")
+					 .attr("transform", "translate(0,20)")
+					 .selectAll("years")
+					 .data(years_swith).enter()
+					 .append("g")
+					 .attr("transform", function(ds,i){
+					 	return "translate(0," + i*step + ")"
+					 })
+					 .on("click", function(ds){
+					 	ds.flag = 1 - ds.flag;
+					 	d3.selectAll(".yearlegend").each(function(dh){
+					 		if(dh.year == ds.year){
+					 			d3.select(this).attr("opacity", ds.flag)
+					 		}
+					 	});
+					 	d3.selectAll(".yearcircle").each(function(dh){
+					 		if(dh.year == ds.year){
+					 			d3.select(this).attr("opacity",ds.flag)
+					 		}
+					 	});
+
+					 });
+			bar.append("rect").attr("x",0).attr("y",0).attr("class","yearlegend").attr("width",bar_width).attr("height",step).attr("fill",function(e){return colors(e.year)});
+			bar.append("text").style("text-anchor","middle").attr("transform", "translate(" +bar_width/2+ "," +(step/2+7)+ ")" ).text(function(e){return e.year});
+		}
+
+		function drawCircleLegend(d,e){
+			if(d.type == 1){
+				circle_data = [1.e9,1.e8,1.e7,1.e6,1.e5,1.e4];
+			}
+			else{
+				circle_data=[1.e-12,1.e-11,1.e-9,1.e-7,1.e-5,1.e-3];
+			}
+
+			circle = d3.select("#circle").append("svg").attr("width",circle_width).attr("height",height).append("g").attr("transform","translate(" + circle_width/2 + ",50)").selectAll("legend").data(circle_data).enter().append("g").attr("transform", function(h, i){return "translate(0, "+ i*height/circle_data.length + ")"});
+
+			circle.append("circle").attr("class","circlelegend").attr("cx", 0).attr("cy", 0).attr("r", function(h){
+				if(d.type == 1){
+					return
+				}
+			})
+		}
+
+	</script>
+</body>
+</html>

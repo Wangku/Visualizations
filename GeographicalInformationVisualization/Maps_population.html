@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<div id="content">
+	<div class="inside">
+		<img src="../NaturePaperVisualization/whiteband.png", alt>
+		<h1>Population Visualization</h1>
+		<img src="../NaturePaperVisualization/whiteband.png", alt>
+		<div> <svg width = "960" height = "600">
+		</svg> </div>
+	</div>
+</div>
+<div class="buttons" style="text-align: center"></div>
+
+<style type="text/css">
+	.buttons{
+    position: absolute;
+    left: 700px;
+    top: 50px;
+    z-index: 1;
+	}
+</style>
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script type="text/javascript">
+	var svg = d3.select("svg").style("display","block").style("margin","auto"),
+		width = +svg.attr("width"),
+		height= +svg.attr("height");
+
+	var projection= d3.geoAlbersUsa().scale(1000).translate([width/2, height/2]);
+
+	var path = d3.geoPath().projection(null);
+
+	var color = d3.scaleLog().range(["hsl(130,90%,90%)", "hsl(300,85%,6%)"]).interpolate(d3.interpolateHcl);
+
+	d3.json("us_albers.json",function(error, us){
+		if (error) throw error;
+
+		var counties = topojson.feature(us, us.objects.counties).features;
+
+		var densities= counties.map(function(d){return d.properties.density = d.properties.pop / path.area(d)}).sort(function(a,b){return a - b});
+
+		color.domain([d3.quantile(densities,.01), d3.quantile(densities,.99)]);
+
+		svg.append("g").attr("class","counties").selectAll("path").data(counties).enter().append("path").style("fill",function(d){return color(d.properties.density)}).attr("d",path);
+	})
+</script>
