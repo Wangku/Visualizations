@@ -36,7 +36,7 @@
 
 - **Tree Structure Visualization - TreeMap**
 
-<div style="text-align:center"><a href="https://wangku.github.io/Visualizations/TreeStructureVisualization/TreeMap2.html"><img src="./image/TreeMap.png" width="450" height="450"></a></div>
+<div style="text-align:center"><a href="https://wangku.github.io/Visualizations/TreeStructureVisualization/TreeMap_2nd.html"><img src="./image/TreeMap.png" width="450" height="450"></a></div>
 
 -----------------
 
@@ -54,7 +54,7 @@
 
 - **Geographical Information Visualization - Coastal Distance Graph**
 
-<div style="text-align:center"><a href="https://wangku.github.io/Visualizations/GeographicalInformationVisualization/CoastalGraphDistance.html"><img src="./image/Coastal.png" width="500" height="310"></a></div>
+<div style="text-align:center"><a href="https://wangku.github.io/Visualizations/GeographicalInformationVisualization/CoastalDistanceGraph.html"><img src="./image/Coastal.png" width="500" height="310"></a></div>
 
 ---------------
 
