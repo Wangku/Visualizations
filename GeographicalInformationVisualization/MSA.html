@@ -84,10 +84,10 @@ function ready(error, state, msa, pop){
 			$("#detail").load("MSA.csv",function(){
 
 				var content = "<div class= tbname></div>"
-				content += "<table><tbody><tr><th></th></tr><tr><th></th></tr><tr><th></th></tr><tr><th></th></tr><tr><th></th></tr><tr><th>GEOID</th><th>"+d.properties.GEOID+"</th></tr>";
-				content += "<tr><th>NAME</th><th>"+d.properties.NAME+"</th></tr>";
-				content += "<tr><th>Land Aera</th><th>"+e(d.properties.ALAND)+"</th></tr>";
-				content += "<tr><th>Water Aera</th><th>"+e(d.properties.AWATER)+"</th></tr>";
+				content += "<table><tbody><tr><th></th></tr><tr><th></th></tr><tr><th></th></tr><tr><th></th></tr><tr><th></th></tr><tr><th>GeoID</th><th>"+d.properties.GEOID+"</th></tr>";
+				content += "<tr><th>Name</th><th>"+d.properties.NAME+"</th></tr>";
+				content += "<tr><th>Land_Area</th><th>"+e(d.properties.ALAND)+"</th></tr>";
+				content += "<tr><th>Water_Area</th><th>"+e(d.properties.AWATER)+"</th></tr>";
 				content += "<tr><th>Population</th><th>"+f(d.properties.POPULATION)+"</th></tr>"
 				content += "</tbody></table>";
 				$(this).html(content);
