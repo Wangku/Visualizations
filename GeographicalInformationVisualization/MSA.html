@@ -14,7 +14,6 @@
       stroke-linecap: round;
 	}
 	.MSA{
-		fill: steelblue;
 		stroke: #ccc;
 	}
 </style>
@@ -44,32 +43,57 @@
 
 	var path1 = d3.geoPath().projection(d3.geoAlbersUsa().scale(1070).translate([width / 2, height / 2-50]));
 
-	var statedata, msadata, newdata, centered;
-		d3.queue().defer(d3.json, "us.json").defer(d3.json,"MSA.json").await(ready);
+	var statedata, msadata, popdata, centered, max, min;
 
-	function ready(error, state, msa){
+	var domain = [10000,50000,100000,500000,1000000,5000000,10000000,50000000];
+	var generator = d3.scaleLinear().domain([0,(domain.length-1)/2,domain.length-1]).range([d3.hsl(117, 0.89, 0.52), d3.hsl(44, 0.92, 0.54), d3.hsl( 0, 0.55, 0.52)]).interpolate(d3.interpolateCubehelix);
+	var range = d3.range(domain.length).map(generator);
+
+	var quantile  = d3.scaleQuantile().domain(domain).range(range);
+
+	var e = d3.format(".3e")
+	var f = d3.format(",");
+
+	d3.queue().defer(d3.json, "us.json").defer(d3.json,"MSA.json").defer(d3.csv,"MSA.csv").await(ready);
+function ready(error, state, msa, pop){
 		if (error) throw error;
 
 		statedata = topojson.feature(state, state.objects.states);
 
-		msadata = topojson.feature(msa, msa.objects.msa);
+		msadata = topojson.feature(msa, msa.objects.msa).features;
 
+		pop.forEach(function(d){
+			d["population"] = +d["population"];
+		});
+
+		max = d3.max(pop.map(function(d){return d.population}));
+		min = d3.min(pop.map(function(d){return d.population}));
+
+		popdata = pop;
+
+		for(i in msadata){
+			tmp = popdata.filter(function(d){return d.geoid == msadata[i].properties.GEOID});
+			msadata[i].properties.POPULATION = tmp[0].population;
+
+		}
 		svg.append("rect").attr("class","background").attr("width",width).attr("height",height).on("click",clicked);
 
 		g = svg.append("g").selectAll("path").data(statedata.features).enter().append("path").attr("class", "states").attr("d",path1).on("click",clicked);
 
-		m = svg.append("g").attr("id","MSAs").selectAll("path").data(msadata.features).enter().append("path").attr("class","MSA").attr("d",path).on("click", function(d){
-			$("#detail").load("USstateCentroids.json",function(){
+		m = svg.append("g").attr("id","MSAs").selectAll("path").data(msadata).enter().append("path").attr("class","MSA").attr("d",path).attr("fill",function(d){return quantile(d.properties.POPULATION)}).on("click", function(d){
+			$("#detail").load("MSA.csv",function(){
 
 				var content = "<div class= tbname></div>"
-				content += "<table><tbody><tr><th>GEOID</th><th>"+d.properties.GEOID+"</th></tr>";
+				content += "<table><tbody><tr><th></th></tr><tr><th></th></tr><tr><th></th></tr><tr><th></th></tr><tr><th></th></tr><tr><th>GEOID</th><th>"+d.properties.GEOID+"</th></tr>";
 				content += "<tr><th>NAME</th><th>"+d.properties.NAME+"</th></tr>";
-				content += "<tr><th>LandAera</th><th>"+d.properties.ALAND+"</th></tr>";
-				content += "<tr><th>WaterAera</th><th>"+d.properties.AWATER+"</th></tr>";
+				content += "<tr><th>Land Aera</th><th>"+e(d.properties.ALAND)+"</th></tr>";
+				content += "<tr><th>Water Aera</th><th>"+e(d.properties.AWATER)+"</th></tr>";
+				content += "<tr><th>Population</th><th>"+f(d.properties.POPULATION)+"</th></tr>"
 				content += "</tbody></table>";
 				$(this).html(content);
 			})
 		});
+
 	}
 
 	function jsonFilter(data, value){
