@@ -1,8 +1,4 @@
-- **Nature Paper Visualization**
 
-<div style="text-align:center"><a href="https://wangku.github.io/Visualizations/NaturePaperVisualization/NaturePaperVisualization.html"><img src="./image/Nature.png" width="450" height="450"></a></div>
-
--------------
 
 - **Tree Structure Visualization - Circle Packing**
 
