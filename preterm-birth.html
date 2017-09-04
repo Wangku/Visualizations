@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<style type="text/css">
+	.background {
+	  fill: none;
+	  pointer-events: all;
+	}
+
+	.states {
+	  /*fill: url(#image);*/
+	  fill: #fff;
+	  stroke: #ccc;
+	  stroke-linejoin: round;
+      stroke-linecap: round;
+	}
+	.MSA{
+		stroke: #ccc;
+	}
+
+	p{
+		margin-left: 25px;
+		margin-right: 25px;
+	}
+	.btn{
+		font-family: Georgia;
+		border: none;
+		color:white;
+    	padding: 5px 90px;
+    	cursor: pointer;
+    	background-color:#00b489;
+	}
+
+</style>
+<div id="content">
+	<div class="inside">
+		<img src="../css/whiteband.png", alt>
+				<h1>Preterm Childbirth Visualization</h1>
+		<div class = "fill">
+			<h2 id = "about">About</h2>
+			<p>Preterm birth is defined as the delivery of a baby before 37 weeks of pregnancy. Current preterm birth rate in the U.S. is 9.6%, which is ranked grade C by March of Dimes premature birth report card. Preterm birth can lead to many health problems for infants, including brain damage, neurological disorders, asthma, intestinal problems and vision problems. The exact cause of preterm birth is unclear, but several risk factors including smoking, alcohol, illegal drug usage, stress, poor nutrition and poor health of the mother, and family violence are confirmed. In this visualization, you will view the prevalence of preterm birth in the U.S. During 2010 and 2014 based on Metropolitan Statistical Areas (MSAs). More details about the data and calculation can be found in our manuscript (under review) titled “Spatio-Temporal Analysis and Visualization for Preterm Birth Data in the United States"</p>
+			<br>
+			<div class = "citation">
+				<h2>Citation</h2>
+				<p><em>Spatio-Temporal Analysis and Visualization for Preterm Birth Data in the United States</em>, Wang K & Yao L, manuscript in submission</p>
+			</div>
+			<br>
+			<h2>Visualization</h2>
+			<p>You can choose on the select box of year to view the data of a specific year. </p><p>You can also select a Metropolitan Statistical Area (MSA) on the map to view more data for that MSA.</p>
+			<h3>The Spatial and Temporal Trend of Preterm Birth for the United States during 2010-2014</h3>
+		</div>
+		<div id="buttons" style="margin-left: 75px">
+				<button class="btn">2010</button>
+				<button class="btn">2011</button>
+				<button class="btn">2012</button>
+				<button class="btn">2013</button>
+				<button class="btn">2014</button>
+		</div>
+			<br>
+		<div class="inline" >
+			<svg width = "960" height = "600" id="visual">
+
+		</svg> </div>
+		<div id="detail"></div>
+		<div id="legends"></div>
+		<div class = "fill" style="margin-top: -150px">
+			<h2>Release history</h2>
+			<p>Version 1.0 Sept 2017 Initial release</p>
+		</div>
+	</div>
+</div>
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="//d3js.org/topojson.v2.min.js"></script>
+<script src="http://d3-legend.susielu.com/d3-legend.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+	var  svg = d3.select("svg"),
+		width= +svg.attr("width"),
+		height=+svg.attr("height");
+
+	var path = d3.geoPath();
+
+	var path1 = d3.geoPath().projection(d3.geoAlbersUsa().scale(1070).translate([width / 2, height / 2-50]));
+
+	var statedata, msadata, popdata, centered, max, min, color;
+
+	var domain = [0, 4e-6, 8e-6, 2e-5, 6e-5, 1e-4, 2.0e-4, 4.5e-4];
+	// var domain = [0, 2e-6, 6e-6, 2e-5, 6e-5, 1e-4, 2e-4, 3e-4];
+
+	var generator = d3.scaleLinear().domain([0,(domain.length-1)/2,domain.length-1]).range([d3.hsl(114, 1, 0.5), d3.hsl(58, 0.95, 0.52),
+    d3.hsl( 0, 0.55, 0.42)]).interpolate(d3.interpolateCubehelix);
+	var range = d3.range(domain.length +1).map(generator);
+
+	var threshold  = d3.scaleThreshold().domain(domain).range(range);
+
+	var e = d3.format(".3e")
+	var f = d3.format(".2e")
+	var h = d3.format(".1e")
+	var hh = d3.format(".1%")
+
+	d3.queue().defer(d3.json, "./GeographicalInformationVisualization/us.json").defer(d3.json,"./GeographicalInformationVisualization/MSA.json").defer(d3.csv,"./MSA-data/msa_2010.csv").await(makeMyMap);
+
+	function makeMyMap(error, state, msa, fix){
+		if (error) throw error;
+
+		statedata = topojson.feature(state, state.objects.states);
+
+		msadata = topojson.feature(msa, msa.objects.msa).features;
+
+		fix.forEach(function(d){
+			d["PercentbyFemale"] = +d["PercentbyFemale"];
+			d["HighSchool"] = +d["HighSchool"];
+			d["Bachelor"] = +d["Bachelor"];
+			d["MedianIncome"] = +d["MedianIncome"];
+			d["Poverty"] = +d["Poverty"];
+			d["Unmarried"] = +d["Unmarried"];
+			d["White"] = +d["White"];
+			d["Black"] = +d["Black"];
+			d["AmericanIndian"] = +d["AmericanIndian"];
+			d["Asian"] = +d["Asian"];
+
+		});
+
+		max = d3.max(fix.map(function(d){return d.PercentbyFemale}));
+		min = d3.min(fix.map(function(d){return d.PercentbyFemale || Infinity}));
+
+		// color = d3.scaleLinear.domain([min,max]).range()
+		popdata = fix;
+		shie = fix.map(function(d){return d.MSA})
+		for(i in msadata){
+			if (shie.includes(msadata[i].properties.GEOID)) {
+				// addelement(POPULATION, PercentbyFemale);
+				msadata[i].properties.POPULATION = popdata.filter(function(d){return d.MSA ==msadata[i].properties.GEOID})[0].PercentbyFemale;
+				msadata[i].properties.Education = popdata.filter(function(d){return d.MSA == msadata[i].properties.GEOID})[0].HighSchool;
+				msadata[i].properties.Education2 = popdata.filter(function(d){return d.MSA ==msadata[i].properties.GEOID})[0].Bachelor;
+				msadata[i].properties.Income = popdata.filter(function(d){return d.MSA ==msadata[i].properties.GEOID})[0].MedianIncome;
+				msadata[i].properties.Poverty = popdata.filter(function(d){return d.MSA ==msadata[i].properties.GEOID})[0].Poverty;
+				msadata[i].properties.Unmarried = popdata.filter(function(d){return d.MSA ==msadata[i].properties.GEOID})[0].Unmarried;
+				msadata[i].properties.White = popdata.filter(function(d){return d.MSA ==msadata[i].properties.GEOID})[0].White;
+				msadata[i].properties.Black = popdata.filter(function(d){return d.MSA ==msadata[i].properties.GEOID})[0].Black;
+				msadata[i].properties.AmericanIndian = popdata.filter(function(d){return d.MSA ==msadata[i].properties.GEOID})[0].AmericanIndian;
+				msadata[i].properties.Asian = popdata.filter(function(d){return d.MSA ==msadata[i].properties.GEOID})[0].Asian;
+				}
+			else {
+				msadata[i].properties.POPULATION = 0;
+				msadata[i].properties.Education = 0;
+				msadata[i].properties.Education2 = 0;
+				msadata[i].properties.Income = 0;
+				msadata[i].properties.Poverty = 0;
+				msadata[i].properties.Unmarried = 0;
+				msadata[i].properties.White = 0;
+				msadata[i].properties.Black = 0;
+				msadata[i].properties.AmericanIndian = 0;
+				msadata[i].properties.Asian = 0;
+
+			}
+			// tmp = popdata.filter(function(d){return d.MSA == msadata[i].id});
+			// msadata[i].properties.POPULATION = tmp[0].PercentbyFemale;
+		}
+
+		svg.append("rect").attr("class","background").attr("width",width).attr("height",height);
+
+		g = svg.append("g").selectAll("path").data(statedata.features).enter().append("path").attr("class", "states").attr("d",path1);
+
+		m = svg.append("g").attr("id","MSAs").selectAll("path").data(msadata).enter().append("path").attr("class","MSA").attr("d",path).attr("fill",function(d){return threshold(d.properties.POPULATION)}).on("click", function(d){
+			$("#detail").load("msa_fixed.csv",function(){
+				var content = "<div class= tbname></div>"
+				content += "<table><tbody><tr><th>GeoID</th><th>"+d.properties.GEOID+"</th></tr>";
+				content += "<tr><th>Name</th><th>"+d.properties.NAME+"</th></tr>";
+				content += "<tr><th>Prevalence</th><th>"+ h(d.properties.POPULATION)+"</th></tr>";
+				content += "<tr><th>Education: high school Rate</th><th>"+hh(d.properties.Education/100)+"</th></tr>";
+				content += "<tr><th>Education: bachelor Rate</th><th>"+hh(d.properties.Education2/100)+"</th></tr>";
+				content += "<tr><th>Median Income</th><th>"+d.properties.Income+"</th></tr>";
+				content += "<tr><th>Poverty Rate</th><th>"+hh(d.properties.Poverty/100)+"</th></tr>";
+				content += "<tr><th>Unmarried Rate</th><th>"+hh(d.properties.Unmarried/100)+"</th></tr>";
+				content += "<tr><th>White Rate</th><th>"+hh(d.properties.White)+"</th></tr>";
+				content += "<tr><th>African American Rate</th><th>"+hh(d.properties.Black)+"</th></tr>";
+				content += "<tr><th>American Indian Rate</th><th>"+hh(d.properties.AmericanIndian)+"</th></tr>";
+				content += "<tr><th>Asian Rate</th><th>"+hh(d.properties.Asian)+"</th></tr>";
+				content += "</tbody></table>";
+				$(this).html(content);
+			})
+		});
+
+
+		label = ["0", "0 to "+ h(domain[1]), h(domain[1]) +" to "+ h(domain[2]), h(domain[2]) +" to "+ h(domain[3]), h(domain[3])+" to "+h(domain[4]),
+			h(domain[4])+" to "+h(domain[5]), h(domain[5])+" to "+h(domain[6]), h(domain[6])+" to "+h(domain[7]) ]
+		var legend = d3.legendColor().labels(label).cells(8).scale(threshold);
+		var svg1 = d3.select("#legends").append('svg').attr("transform", "translate(820,-260)").attr("height","143px")
+		svg1.append("g").attr("class", "legendQuant").call(legend);
+		// var svg1 = d3.select("#legend").append('svg').attr("transform", "translate(820,-270)").attr("height","143px")
+		// svg.append("g").attr("class", "legendQuant").attr("transform", "translate(820,458)").call(legend);
+		// svg1.select(".legendQuant").call(legend);
+	}
+
+
+	function jsonFilter(data, value){
+		var result = new Array();
+		var array = data.features;
+		for( var indicator in array){
+			if( array[indicator].properties.LSAD === value){
+				result.push(array[indicator])
+			}
+		}
+		return result;
+	}
+
+	function clicked(d){
+		var x, y ,k;
+
+        if (d && centered !== d) {
+		    var centroid = path1.centroid(d);
+		    x = centroid[0];
+		    y = centroid[1];
+		    k = 2;
+		    centered = d;
+		} else {
+		    x = width / 2;
+		    y = height / 2;
+		    k = 1;
+		    centered = null;
+		}
+
+		g.selectAll("path").classed("active", centered && function(d) { return d === centered; });
+
+		g.transition().duration(500).attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")").style("stroke-width", 1.5 / k + "px");
+
+		m.transition().duration(500).attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")").style("stroke-width", 1.5 / k + "px");
+	}
+
+	function zoomed() {
+    	projection.translate(d3.event.translate).scale(d3.event.scale);
+    	g.selectAll("path").attr("d", path);
+	}
+
+	$(".btn").click(function(){
+		d = $(this).text();
+		filename = "./MSA-data/msa_"+d+".csv";
+		$("svg#visual").find("rect").remove();
+		$("div#legends").find("svg").remove();
+		$("div#detail").find("table").remove();
+		d3.queue().defer(d3.json, "./GeographicalInformationVisualization/us.json").defer(d3.json,"./GeographicalInformationVisualization/MSA.json").defer(d3.csv, filename).await(makeMyMap);
+	});
+</script>
+</html>
