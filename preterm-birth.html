@@ -57,16 +57,13 @@
 				<button class="btn">2014</button>
 		</div>
 			<br>
-		<div class="inline" >
-			<svg width = "960" height = "600" id="visual">
 
-		</svg> </div>
-		<div id="detail"></div>
-		<div id="legends"></div>
-		<div class = "fill" style="margin-top: -150px">
-			<h2>Release history</h2>
-			<p>Version 1.0 Sept 2017 Initial release</p>
+		<div class="inline" >
+			<svg width = "960" height = "600" id="visual"></svg>
+			<div id="legends"></div>
 		</div>
+		<div id="detail" style="display:inline-block;height:600px"></div>
+
 	</div>
 </div>
 <link href="./css/style.css" rel="stylesheet" type="text/css">
@@ -164,7 +161,7 @@
 		g = svg.append("g").selectAll("path").data(statedata.features).enter().append("path").attr("class", "states").attr("d",path1);
 
 		m = svg.append("g").attr("id","MSAs").selectAll("path").data(msadata).enter().append("path").attr("class","MSA").attr("d",path).attr("fill",function(d){return threshold(d.properties.POPULATION)}).on("click", function(d){
-			$("#detail").load("msa_fixed.csv",function(){
+			$("#detail").load("./MSA-data/msa_2010.csv",function(){
 				var content = "<div class= tbname></div>"
 				content += "<table><tbody><tr><th>GeoID</th><th>"+d.properties.GEOID+"</th></tr>";
 				content += "<tr><th>Name</th><th>"+d.properties.NAME+"</th></tr>";
